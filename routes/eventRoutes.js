@@ -9,6 +9,7 @@ router.get('/event/:id', eventController.getEventByID);
 
 // insert
 router.post('/event', eventController.addEvent);
+router.post('/movie', eventController.addMovie);
 
 // update
 router.patch('/event/:id', eventController.updateEvent);

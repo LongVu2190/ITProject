@@ -10,7 +10,7 @@ const allEvents = async () => {
         let pool = await sql.connect(config.sql);
 
         // Lấy hết queries có trong thư mục events
-        const sqlQueries = await utils.loadSqlQueries('events');
+        const sqlQueries = await utils.loadSqlQueries('queries');
 
         // Chạy query allEvents.sql
         const eventsList = await pool.request().query(sqlQueries.allEvents);
@@ -25,7 +25,7 @@ const allEvents = async () => {
 const eventByID = async(eventID) => {
     try {
         let pool = await sql.connect(config.sql);
-        const sqlQueries = await utils.loadSqlQueries('events');
+        const sqlQueries = await utils.loadSqlQueries('queries');
         const event = await pool.request()
                             .input('eventID', sql.NVarChar, eventID)
                             .query(sqlQueries.eventByID);
@@ -39,7 +39,7 @@ const addEvent = async (eventdata) => {
     try {
         let pool = await sql.connect(config.sql);
 
-        const sqlQueries = await utils.loadSqlQueries('events');
+        const sqlQueries = await utils.loadSqlQueries('queries');
 
         const insertEvent = await pool.request()
                             .input('EventID', sql.NVarChar, eventdata.EventID)
@@ -55,7 +55,7 @@ const addEvent = async (eventdata) => {
 const updateEvent = async (eventID, data) => {
     try {
         let pool = await sql.connect(config.sql);
-        const sqlQueries = await utils.loadSqlQueries('events');
+        const sqlQueries = await utils.loadSqlQueries('queries');
         const update = await pool.request()
                         .input('EventID', sql.NVarChar, eventID)
                         .input('Information', sql.NVarChar, data.Information)
@@ -69,11 +69,30 @@ const updateEvent = async (eventID, data) => {
 const deleteEvent = async (eventID) => {
     try {
         let pool = await sql.connect(config.sql);
-        const sqlQueries = await utils.loadSqlQueries('events');
+        const sqlQueries = await utils.loadSqlQueries('queries');
         const deleteEvent = await pool.request()
                             .input('eventId', sql.NVarChar, eventID)
                             .query(sqlQueries.deleteEvent);
         return deleteEvent.recordset;
+    } catch (error) {
+        return error.message;
+    }
+}
+
+const addMovie = async (eventdata) => {
+    try {
+        let pool = await sql.connect(config.sql);
+
+        const sqlQueries = await utils.loadSqlQueries('queries');
+
+        const insertEvent = await pool.request()
+                            .input('Movie_ID', sql.NVarChar, eventdata.Movie_ID)
+                            .input('Movie_Title', sql.NVarChar, eventdata.Movie_Title)
+                            .input('Movie_Cost', sql.Int, eventdata.Movie_Cost)
+                            .input('Picture_URL', sql.NVarChar, eventdata.Picture_URL)
+                            .query(sqlQueries.addMovie);   
+
+        return insertEvent.recordset;
     } catch (error) {
         return error.message;
     }
@@ -84,5 +103,7 @@ module.exports = {
     eventByID,
     addEvent,
     updateEvent,
-    deleteEvent
+    deleteEvent,
+
+    addMovie
 }
