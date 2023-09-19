@@ -98,6 +98,26 @@ const addMovie = async (eventdata) => {
     }
 }
 
+const addShowTime = async (eventdata) => {
+    try {
+        let pool = await sql.connect(config.sql);
+
+        const sqlQueries = await utils.loadSqlQueries('queries');
+
+        const insertEvent = await pool.request()
+                            .input('ShowTime_ID', sql.NVarChar, eventdata.ShowTime_ID)
+                            .input('Movie_ID', sql.NVarChar, eventdata.Movie_ID)
+                            .input('Date', sql.Date, eventdata.Date)
+                            .input('Start_Time', sql.NVarChar, eventdata.Start_Time)
+                            .input('End_Time', sql.NVarChar, eventdata.End_Time)
+                            .query(sqlQueries.addShowTime);   
+
+        
+        return insertEvent.recordset;
+    } catch (error) {
+        return error.message;
+    }
+}
 module.exports = {
     allEvents,
     eventByID,
@@ -105,5 +125,6 @@ module.exports = {
     updateEvent,
     deleteEvent,
 
-    addMovie
+    addMovie,
+    addShowTime
 }

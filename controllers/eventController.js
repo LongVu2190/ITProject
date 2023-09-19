@@ -59,8 +59,18 @@ const deleteEvent = async (req, res, next) => {
 const addMovie = async (req, res, next) => {
     try {
         const data = req.query;
-        console.log(data);
         const insert = await eventData.addMovie(data);
+        
+        res.send(insert);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+const addShowTime = async (req, res, next) => {
+    try {
+        const data = req.query;
+        const insert = await eventData.addShowTime(data);
         
         res.send(insert);
     } catch (error) {
@@ -74,5 +84,7 @@ module.exports = {
     addEvent,
     updateEvent,
     deleteEvent,
-    addMovie
+
+    addMovie,
+    addShowTime
 }
