@@ -1,10 +1,10 @@
-INSERT INTO [dbo].[Events]
+INSERT INTO [dbo].[Password_Test]
     (
         [EventID],
-        [Information]
+        [Password]
     )
 VALUES 
     (
         @EventID,
-        @Information
+        @Password
     )

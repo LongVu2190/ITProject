@@ -1,8 +1,10 @@
 'use strict';
 
+
 const utils = require('../utils');
 const config = require('../../config');
 const sql = require('mssql');
+const bcrypt = require('bcrypt');
 
 const allEvents = async () => {
     try {
@@ -41,9 +43,11 @@ const addEvent = async (eventdata) => {
 
         const sqlQueries = await utils.loadSqlQueries('queries');
 
+        const hashPass = await bcrypt.hash(eventdata.Password, parseInt(process.env.SALT_ROUNDS));
+
         const insertEvent = await pool.request()
                             .input('EventID', sql.NVarChar, eventdata.EventID)
-                            .input('Information', sql.NVarChar, eventdata.Information)
+                            .input('Password', sql.NVarChar, hashPass)
                             .query(sqlQueries.insertEvent);   
 
         return insertEvent.recordset;

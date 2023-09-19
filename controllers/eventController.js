@@ -25,7 +25,6 @@ const getEventByID = async (req, res, next) => {
 const addEvent = async (req, res, next) => {
     try {
         const data = req.query;
-        console.log(data);
         const insert = await eventData.addEvent(data);
         
         res.send(insert);
@@ -38,7 +37,6 @@ const updateEvent = async (req, res, next) => {
     try {
         const EventID = req.params.id;
         const data = req.body;
-        console.log(req);
         const updated = await eventData.updateEvent(EventID, data);
         res.send(updated);
     } catch (error) {
