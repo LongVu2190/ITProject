@@ -11,6 +11,7 @@ router.post('/adduser/', eventController.addUser);
 router.post('/addticket/', eventController.addTicket);
 router.post('/addcomment/', eventController.addComment);
 
+// Get
 module.exports = {
     routes: router
 }
