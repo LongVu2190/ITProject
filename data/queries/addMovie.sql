@@ -3,19 +3,22 @@ INSERT INTO [dbo].[Movie_List]
         [Movie_ID],
         [Movie_Title],
 		[Movie_Cost],
-		[Picture_URL]
+        [Genre],
+		[Thumbnail]
     )
 VALUES 
     (
         @Movie_ID,
         @Movie_Title,
 		@Movie_Cost,
-		@Picture_URL
+        @Genre,
+		@Thumbnail
     )
 
-SELECT [Movie_ID],
+SELECT  [Movie_ID],
         [Movie_Title],
         [Movie_Cost],
-        [Picture_URL]
+        [Genre],
+        [Thumbnail]
 FROM [dbo].[Movie_List]
 WHERE [Movie_ID] = @Movie_ID
