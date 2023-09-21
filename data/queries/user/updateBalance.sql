@@ -1,6 +1,7 @@
 UPDATE [dbo].[User_Account]
 SET [Balance] = @Balance
 WHERE [UserName] = @UserName
+
 SELECT  [UserName],
         [Password],
 				[NickName],
