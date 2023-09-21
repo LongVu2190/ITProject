@@ -35,8 +35,20 @@ const getBalance = async (req, res, next) => {
     }
 }
 
+const getUser = async (req, res, next) => {
+    try {
+        const data = req.body;
+        const user = await userQueries.getUser(data);
+
+        res.send(user);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
 export default {
     addUser,
     updateBalance,
-    getBalance
+    getBalance,
+    getUser
 }

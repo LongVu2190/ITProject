@@ -56,7 +56,8 @@ function generateRandomID() {
     randomID = randomID.split('').sort(() => Math.random() - 0.5).join('');
   
     return randomID;
-  }
+}
+
 export default {
     loadSqlQueries,
     timeDifference,

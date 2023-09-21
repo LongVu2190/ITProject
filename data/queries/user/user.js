@@ -58,8 +58,43 @@ const getBalance = async(ID) => {
     }
 }
 
+const getUser = async(data) => {
+    try {
+        let pool = await sql.connect(config.sql);
+        const sqlQueries = await utils.loadSqlQueries('user');
+
+        const user = await pool.request()
+                                .input('UserName', sql.NVarChar, data.UserName)
+                                .query(sqlQueries.getUser);
+
+        if (user.recordset[0] === null)
+        {
+            return {
+                message: "Tài khoản mật khẩu sai",
+            };
+        }
+
+        let checkOK = await bcrypt.compare(data.Password, user.recordset[0].Password);
+
+        if (checkOK)
+        {
+            return {
+                message: "login successfully",
+                data: user.recordset
+            };
+        }
+        
+        return {
+            message: "Tài khoản mật khẩu sai",
+        };
+
+    } catch (error) {
+        return error;
+    }
+}
 export default {
     addUser,
     updateBalance,
-    getBalance
+    getBalance,
+    getUser
 }
