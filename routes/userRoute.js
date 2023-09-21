@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 router.patch('/balance/', userController.updateBalance);
-router.get('/balance/:id', userController.getBalance);
+router.get('/balance/', userController.getBalance);
 router.get('/login/', userController.getUser);
 router.post('/', userController.addUser);
 

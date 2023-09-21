@@ -13,7 +13,7 @@ const addComment = async (req, res, next) => {
 
 const deleteComment = async (req, res, next) => {
     try {
-        const ID = req.params.id;
+        const ID = req.body.ID;
         const deletedEvent = await commentQueries.deleteComment(ID);
         res.send(deletedEvent);
     } catch (error) {
