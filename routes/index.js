@@ -1,0 +1,1 @@
+export { default as movieRouter } from './movieRoute.js'
