@@ -22,6 +22,43 @@ const addComment = async (data) => {
     }
 }
 
+const deleteComment = async (ID) => {
+    try {
+        let pool = await sql.connect(config.sql);
+        const sqlQueries = await utils.loadSqlQueries('comment');
+
+        const comment = await pool.request()
+                            .input('ID', sql.NVarChar, ID)
+                            .query(sqlQueries.deleteComment);
+
+        return {
+            message: "Delete successfully",
+        };
+    } catch (error) {
+        return error.message;
+    }
+}
+
+const getCommentByMovie = async(Movie_ID) => {
+    try {
+        let pool = await sql.connect(config.sql);
+        const sqlQueries = await utils.loadSqlQueries('comment');
+
+        console.log(Movie_ID);
+
+        const comments = await pool.request()
+                            .input('Movie_ID', sql.NVarChar, Movie_ID)
+                            .query(sqlQueries.getCommentByMovie);
+
+        return comments.recordset;
+
+    } catch (error) {
+        return error;
+    }
+}
+
 export default {
-    addComment
+    addComment,
+    deleteComment,
+    getCommentByMovie
 }
