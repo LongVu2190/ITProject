@@ -7,7 +7,7 @@ INSERT INTO [dbo].[Ticket_List]
     )
 VALUES 
     (
-        @ID
+        @ID,
         @UserName,
         @ShowTime_ID,
 		@Seat_Number

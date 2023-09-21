@@ -9,14 +9,14 @@ const addComment = async (data) => {
 
         const ID = utils.generateRandomID();
 
-        const insertEvent = await pool.request()
+        const insertComment = await pool.request()
                             .input('ID', sql.NVarChar, ID)
                             .input('Ticket_ID', sql.NVarChar, data.Ticket_ID)
                             .input('Rating_Point', sql.Int, data.Rating_Point)
                             .input('Comment', sql.NVarChar, data.Comment)
                             .query(sqlQueries.addComment);   
                             
-        return insertEvent.recordset;
+        return insertComment.recordset;
     } catch (error) {
         return error;
     }

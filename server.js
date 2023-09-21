@@ -18,5 +18,5 @@ app.use('/ticket/', ticketRouter);
 app.use('/comment/', commentRouter);
 
 app.listen(config.port, () => {
-    console.log('app listening on url http://localhost:' + config.port)
+    console.log('app is listening on url http://localhost:' + config.port)
 });

@@ -9,5 +9,5 @@ SELECT 	st.[ID],
 		[End_Time],
 		[Run_Time],
 		[Current_Quantity]
-FROM [dbo].Movie_List mv inner join [dbo].ShowTime_List st on mv.Movie_ID = st.Movie_ID 
+FROM [dbo].[Movie_List] mv inner join [dbo].[ShowTime_List] st on mv.Movie_ID = st.Movie_ID 
 WHERE st.[Date] > GETDATE()

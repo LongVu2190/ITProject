@@ -11,6 +11,18 @@ const addTicket = async (req, res, next) => {
     }
 }
 
+const getTicket = async (req, res, next) => {
+    try {
+        const data = req.body;
+        const ticket = await ticketQueries.getTicket(data);
+        
+        res.send(ticket);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
 export default {
-    addTicket
+    addTicket,
+    getTicket
 }
