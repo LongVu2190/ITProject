@@ -8,9 +8,11 @@ const addUser = async (data) => {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries('user');
 
+        const ID = utils.generateRandomID();
         const hashPass = await bcrypt.hash(data.Password, parseInt(process.env.SALT_ROUNDS));
 
         const insertEvent = await pool.request()
+                            .input('ID', sql.NVarChar, ID)
                             .input('UserName', sql.NVarChar, data.UserName)
                             .input('Password', sql.NVarChar, hashPass)
                             .input('NickName', sql.NVarChar, data.NickName)
@@ -19,10 +21,45 @@ const addUser = async (data) => {
                             
         return insertEvent.recordset;
     } catch (error) {
-        return error;
+        if (error.number == 2601) {
+            throw new Error ("Trùng cmm")
+        }
+        else 
+            return error
+    }
+}
+
+const updateBalance = async (userName, data) => {
+    try {
+        let pool = await sql.connect(config.sql);
+        const sqlQueries = await utils.loadSqlQueries('user');
+        console.log(userName);
+        console.log(data.Balance);
+        const update = await pool.request()
+                        .input('UserName', sql.NVarChar, userName)
+                        .input('Balance', sql.Int, data.Balance)
+                        .query(sqlQueries.updateBalance);
+        return update.recordset;
+    } catch (error) {
+        return error.message;
+    }
+}
+
+const getBalance = async(ID) => {
+    try {
+        let pool = await sql.connect(config.sql);
+        const sqlQueries = await utils.loadSqlQueries('user');
+        const event = await pool.request()
+                            .input('ID', sql.NVarChar, ID)
+                            .query(sqlQueries.getBalance);
+        return event.recordset;
+    } catch (error) {
+        return error.message;
     }
 }
 
 export default {
-    addUser
+    addUser,
+    updateBalance,
+    getBalance
 }

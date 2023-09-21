@@ -8,7 +8,10 @@ const addShowTime = async (data) => {
 
         const sqlQueries = await utils.loadSqlQueries('showTime');
 
+        const ID = utils.generateRandomID();
+            
         const insertEvent = await pool.request()
+                            .input('ID', sql.NVarChar, ID)
                             .input('ShowTime_ID', sql.NVarChar, data.ShowTime_ID)
                             .input('Movie_ID', sql.NVarChar, data.Movie_ID)
                             .input('Date', sql.Date, data.Date)
@@ -19,7 +22,7 @@ const addShowTime = async (data) => {
        
         return insertEvent.recordset;
     } catch (error) {
-        return error;
+        return error.message;
     }
 }
 

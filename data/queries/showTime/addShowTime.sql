@@ -1,5 +1,6 @@
 INSERT INTO [dbo].[ShowTime_List]
     (
+        [ID],
         [ShowTime_ID],
         [Movie_ID],
 		[Date],
@@ -10,6 +11,7 @@ INSERT INTO [dbo].[ShowTime_List]
     )
 VALUES 
     (
+        @ID,
         @ShowTime_ID,
         @Movie_ID,
 		@Date,
@@ -18,11 +20,12 @@ VALUES
         @Run_Time,
         0
     )
-SELECT  [ShowTime_ID],
+SELECT  [ID],
+        [ShowTime_ID],
         [Movie_ID],
 		[Date],
         [Start_Time],
 		[End_Time],
         [Run_Time]
 FROM [dbo].[ShowTime_List]
-WHERE [ShowTime_ID] = @ShowTime_ID
+WHERE [ID] = @ID

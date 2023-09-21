@@ -3,7 +3,7 @@ import config from './config.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
-import { movieRouter } from './routes/index.js';
+import { movieRouter, userRouter, showTimeRouter, ticketRouter, commentRouter } from './routes/index.js';
 
 const app = express();
 
@@ -12,6 +12,10 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/movie/', movieRouter);
+app.use('/user/', userRouter);
+app.use('/showtime/', showTimeRouter);
+app.use('/ticket/', ticketRouter);
+app.use('/comment/', commentRouter);
 
 app.listen(config.port, () => {
     console.log('app listening on url http://localhost:' + config.port)

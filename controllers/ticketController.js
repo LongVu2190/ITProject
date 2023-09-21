@@ -2,7 +2,7 @@ import { ticketQueries } from '../data/queries/index.js'
 
 const addTicket = async (req, res, next) => {
     try {
-        const data = req.query;
+        const data = req.body;
         const insert = await ticketQueries.addTicket(data);
         
         res.send(insert);

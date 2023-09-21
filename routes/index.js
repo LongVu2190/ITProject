@@ -1,1 +1,5 @@
 export { default as movieRouter } from './movieRoute.js'
+export { default as userRouter } from './userRoute.js'
+export { default as showTimeRouter } from './showTimeRoute.js'
+export { default as commentRouter } from './commentRoute.js'
+export { default as ticketRouter } from './ticketRoute.js'

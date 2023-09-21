@@ -2,7 +2,7 @@ import { movieQueries } from '../data/queries/index.js'
 
 const addMovie = async (req, res, next) => {
     try {
-        const data = req.query;
+        const data = req.body;
         const insert = await movieQueries.addMovie(data);
         
         res.send(insert);

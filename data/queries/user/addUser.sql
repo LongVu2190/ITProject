@@ -1,5 +1,6 @@
 INSERT INTO [dbo].[User_Account]
     (
+        [ID],
         [UserName],
         [Password],
 		[NickName],
@@ -8,6 +9,7 @@ INSERT INTO [dbo].[User_Account]
     )
 VALUES 
     (
+        @ID,
         @UserName,
         @Password,
 		@NickName,
@@ -15,10 +17,11 @@ VALUES
 		0
     )
 
-SELECT  [UserName],
+SELECT  [ID],
+        [UserName],
         [Password],
 		[NickName],
         [Email],
 		[Balance]
 FROM [dbo].[User_Account]
-WHERE [UserName] = @UserName
+WHERE [ID] = @ID
