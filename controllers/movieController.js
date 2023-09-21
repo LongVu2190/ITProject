@@ -11,9 +11,9 @@ const addMovie = async (req, res, next) => {
     }
 }
 
-const getAllMovie = async (req, res, next) => {
+const getCurrentMovie = async (req, res, next) => {
     try {
-        const movies = await movieQueries.getAllMovie();
+        const movies = await movieQueries.getCurrentMovie();
 
         res.send(movies);
     } catch (error) {
@@ -23,5 +23,5 @@ const getAllMovie = async (req, res, next) => {
 
 export default {
     addMovie,
-    getAllMovie
+    getCurrentMovie
 }

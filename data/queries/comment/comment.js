@@ -44,8 +44,6 @@ const getCommentByMovie = async(Movie_ID) => {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries('comment');
 
-        console.log(Movie_ID);
-
         const comments = await pool.request()
                             .input('Movie_ID', sql.NVarChar, Movie_ID)
                             .query(sqlQueries.getCommentByMovie);

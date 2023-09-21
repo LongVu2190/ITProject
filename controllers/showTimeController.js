@@ -11,21 +11,12 @@ const addShowTime = async (req, res, next) => {
     }
 }
 
-const getCurrentShowTime = async (req, res, next) => {
-    try {
-        const user = await showTimeQueries.getCurrentShowTime();
-
-        res.send(user);
-    } catch (error) {
-        res.status(400).send(error.message);
-    }
-}
-
 const getComingShowTime = async (req, res, next) => {
     try {
-        const user = await showTimeQueries.getComingShowTime();
+        const data = req.body.Movie_ID;
+        const showTime = await showTimeQueries.getComingShowTime(data);
 
-        res.send(user);
+        res.send(showTime);
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -33,6 +24,5 @@ const getComingShowTime = async (req, res, next) => {
 
 export default {
     addShowTime,
-    getCurrentShowTime,
     getComingShowTime
 }

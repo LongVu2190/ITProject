@@ -13,9 +13,8 @@ const addUser = async (req, res, next) => {
 
 const updateBalance = async (req, res, next) => {
     try {
-        const userName = req.params.username;
-        const data = req.body;
-        const updated = await userQueries.updateBalance(userName, data);
+        const user = req.body;
+        const updated = await userQueries.updateBalance(user);
         res.send({
             message: 'Update successfully',
             data: updated
@@ -27,8 +26,8 @@ const updateBalance = async (req, res, next) => {
 
 const getBalance = async (req, res, next) => {
     try {
-        const ID = req.params.username;
-        const balance = await userQueries.getBalance(ID);
+        const id = req.params.id;
+        const balance = await userQueries.getBalance(id);
         res.send(balance);
     } catch (error) {
         res.status(400).send(error.message);

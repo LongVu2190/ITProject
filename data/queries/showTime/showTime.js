@@ -26,26 +26,14 @@ const addShowTime = async (data) => {
     }
 }
 
-const getCurrentShowTime = async() => {
+const getComingShowTime = async(Movie_ID) => {
     try {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries('showtime');
 
-        const currentShowTime = await pool.request().query(sqlQueries.getCurrentShowTime);
-
-        return currentShowTime.recordset;
-
-    } catch (error) {
-        return error;
-    }
-}
-
-const getComingShowTime = async() => {
-    try {
-        let pool = await sql.connect(config.sql);
-        const sqlQueries = await utils.loadSqlQueries('showtime');
-
-        const currentShowTime = await pool.request().query(sqlQueries.getComingShowTime);
+        const currentShowTime = await pool.request()
+                                        .input('Movie_ID', sql.NVarChar, Movie_ID)
+                                        .query(sqlQueries.getComingShowTime);
 
         return currentShowTime.recordset;
 
@@ -56,6 +44,5 @@ const getComingShowTime = async() => {
 
 export default {
     addShowTime,
-    getCurrentShowTime,
     getComingShowTime
 }

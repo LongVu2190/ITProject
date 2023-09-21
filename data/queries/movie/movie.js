@@ -23,14 +23,14 @@ const addMovie = async (data) => {
     }
 }
 
-const getAllMovie = async() => {
+const getCurrentMovie = async() => {
     try {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries('movie');
 
-        const allMovie = await pool.request().query(sqlQueries.getAllMovie);
+        const currentMovie = await pool.request().query(sqlQueries.getCurrentMovie);
 
-        return allMovie.recordset;
+        return currentMovie.recordset;
 
     } catch (error) {
         return error;
@@ -39,5 +39,5 @@ const getAllMovie = async() => {
 
 export default {
     addMovie,
-    getAllMovie
+    getCurrentMovie
 }

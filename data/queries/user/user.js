@@ -29,16 +29,16 @@ const addUser = async (data) => {
     }
 }
 
-const updateBalance = async (userName, data) => {
+const updateBalance = async (user) => {
     try {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries('user');
-        console.log(userName);
-        console.log(data.Balance);
+
         const update = await pool.request()
-                        .input('UserName', sql.NVarChar, userName)
-                        .input('Balance', sql.Int, data.Balance)
+                        .input('ID', sql.NVarChar, user.ID)
+                        .input('Balance', sql.Int, user.Balance)
                         .query(sqlQueries.updateBalance);
+
         return update.recordset;
     } catch (error) {
         return error.message;
@@ -67,7 +67,7 @@ const getUser = async(data) => {
                                 .input('UserName', sql.NVarChar, data.UserName)
                                 .query(sqlQueries.getUser);
 
-        if (user.recordset[0] === null)
+        if (user.recordset[0] == null)
         {
             return {
                 message: "Account does not exist",
