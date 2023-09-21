@@ -26,6 +26,36 @@ const addShowTime = async (data) => {
     }
 }
 
+const getCurrentShowTime = async() => {
+    try {
+        let pool = await sql.connect(config.sql);
+        const sqlQueries = await utils.loadSqlQueries('showtime');
+
+        const currentShowTime = await pool.request().query(sqlQueries.getCurrentShowTime);
+
+        return currentShowTime.recordset;
+
+    } catch (error) {
+        return error;
+    }
+}
+
+const getComingShowTime = async() => {
+    try {
+        let pool = await sql.connect(config.sql);
+        const sqlQueries = await utils.loadSqlQueries('showtime');
+
+        const currentShowTime = await pool.request().query(sqlQueries.getComingShowTime);
+
+        return currentShowTime.recordset;
+
+    } catch (error) {
+        return error;
+    }
+}
+
 export default {
-    addShowTime
+    addShowTime,
+    getCurrentShowTime,
+    getComingShowTime
 }

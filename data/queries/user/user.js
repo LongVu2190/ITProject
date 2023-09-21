@@ -70,7 +70,7 @@ const getUser = async(data) => {
         if (user.recordset[0] === null)
         {
             return {
-                message: "Tài khoản mật khẩu sai",
+                message: "Account does not exist",
             };
         }
 
@@ -79,13 +79,13 @@ const getUser = async(data) => {
         if (checkOK)
         {
             return {
-                message: "login successfully",
+                message: "Login successfully",
                 data: user.recordset
             };
         }
         
         return {
-            message: "Tài khoản mật khẩu sai",
+            message: "Wrong password",
         };
 
     } catch (error) {
