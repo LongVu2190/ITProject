@@ -1,1 +1,3 @@
-Link Diagram: https://drive.google.com/drive/folders/1iCHvSk2UfFf5f-Sl1_6zTmUqm4SjQUA0?usp=sharing
+# ITProject
+
+Database: SQL Server 2019
