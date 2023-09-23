@@ -1,4 +1,5 @@
 # ITProject
 
-NodeJS + Express
-Database: SQL Server 2019
+- NodeJS + Express
+
+- Database: SQL Server 2019
