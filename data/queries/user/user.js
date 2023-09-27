@@ -64,7 +64,7 @@ const getUser = async(data) => {
         const sqlQueries = await utils.loadSqlQueries('user');
 
         const user = await pool.request()
-                                .input('UserName', sql.NVarChar, data.UserName)
+                                .input('Email', sql.NVarChar, data.Email)
                                 .query(sqlQueries.getUser);
 
         if (user.recordset[0] == null)
