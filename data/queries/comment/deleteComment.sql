@@ -1,2 +1,2 @@
 DELETE [dbo].[User_Comment]
-WHERE [ID] = @ID
+WHERE [Comment_ID] = @Comment_ID

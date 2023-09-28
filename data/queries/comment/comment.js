@@ -10,7 +10,7 @@ const addComment = async (data) => {
         const Comment_ID = utils.generateRandomID();
 
         const insertComment = await pool.request()
-                            .input('ID', sql.NVarChar, Comment_ID)
+                            .input('Comment_ID', sql.NVarChar, Comment_ID)
                             .input('Ticket_ID', sql.NVarChar, data.Ticket_ID)
                             .input('Rating_Point', sql.Int, data.Rating_Point)
                             .input('Comment', sql.NVarChar, data.Comment)
@@ -22,13 +22,13 @@ const addComment = async (data) => {
     }
 }
 
-const deleteComment = async (ID) => {
+const deleteComment = async (Comment_ID) => {
     try {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries('comment');
 
         const comment = await pool.request()
-                            .input('ID', sql.NVarChar, ID)
+                            .input('Comment_ID', sql.NVarChar, Comment_ID)
                             .query(sqlQueries.deleteComment);
 
         return {
