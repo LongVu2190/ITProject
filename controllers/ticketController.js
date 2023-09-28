@@ -1,28 +1,16 @@
-import { ticketQueries } from '../data/queries/index.js'
+import { ticketQueries } from '../data/index.js'
 
-const addTicket = async (req, res, next) => {
+const buyTickets = async (req, res, next) => {
     try {
         const data = req.body;
-        const insert = await ticketQueries.addTicket(data);
+        const response = await ticketQueries.buyTickets(data);
         
-        res.send(insert);
-    } catch (error) {
-        res.status(400).send(error.message);
-    }
-}
-
-const getSeatsOfShowTime = async (req, res, next) => {
-    try {
-        const ShowTime_ID = req.body.ShowTime_ID;
-        const seats = await ticketQueries.getSeatsOfShowTime(ShowTime_ID);
-        
-        res.send(seats);
+        res.send(response);
     } catch (error) {
         res.status(400).send(error.message);
     }
 }
 
 export default {
-    addTicket,
-    getSeatsOfShowTime
+    buyTickets
 }

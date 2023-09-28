@@ -1,9 +1,10 @@
 import fs from 'fs-extra';
 import { join } from 'path';
 
+// Load all sql queries in folderName
 const loadSqlQueries = async (folderName) => {
 
-    const filePath = join(process.cwd(), 'data/queries', folderName);
+    const filePath = join(process.cwd(), 'data', folderName);
 
     const files = await fs.readdir(filePath);
 
@@ -20,6 +21,7 @@ const loadSqlQueries = async (folderName) => {
     return queries;
 }
 
+// Generate Random ID
 function generateRandomID() {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
     const numbers = '0123456789';

@@ -1,4 +1,4 @@
-import { showTimeQueries } from '../data/queries/index.js'
+import { showTimeQueries } from '../data/index.js'
 
 const addShowTime = async (req, res, next) => {
     try {
@@ -31,8 +31,20 @@ const getTodayShowTime = async (req, res, next) => {
     }
 }
 
+const getSeatsOfShowTime = async (req, res, next) => {
+    try {
+        const data = req.body;
+        const response = await showTimeQueries.getSeatsOfShowTime(data);
+        
+        res.send(response);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
 export default {
     addShowTime,
     getComingShowTime,
-    getTodayShowTime
+    getTodayShowTime,
+    getSeatsOfShowTime
 }

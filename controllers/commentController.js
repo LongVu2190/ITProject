@@ -1,11 +1,10 @@
-import { commentQueries } from '../data/queries/index.js'
+import { commentQueries } from '../data/index.js'
 
 const addComment = async (req, res, next) => {
     try {
         const data = req.body;
-        const comment = await commentQueries.addComment(data);
-        
-        res.send(comment);
+        const response = await commentQueries.addComment(data);       
+        res.send(response);
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -13,9 +12,9 @@ const addComment = async (req, res, next) => {
 
 const deleteComment = async (req, res, next) => {
     try {
-        const Comment_ID = req.body.Comment_ID;
-        const deletedEvent = await commentQueries.deleteComment(Comment_ID);
-        res.send(deletedEvent);
+        const data = req.body;
+        const response = await commentQueries.deleteComment(data);
+        res.send(response);
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -24,9 +23,8 @@ const deleteComment = async (req, res, next) => {
 const getCommentByMovie = async (req, res, next) => {
     try {
         const data = req.body.Movie_ID;
-        const comments = await commentQueries.getCommentByMovie(data);
-
-        res.send(comments);
+        const response = await commentQueries.getCommentByMovie(data);
+        res.send(response);
     } catch (error) {
         res.status(400).send(error.message);
     }

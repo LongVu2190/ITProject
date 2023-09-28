@@ -1,11 +1,11 @@
-import utils from '../../utils.js';
-import config from '../../../config.js';
+import utils from '../utils.js';
+import config from '../../config.js';
 import sql from 'mssql';
 
 const addMovie = async (data) => {
     try {
         let pool = await sql.connect(config.sql);
-        const sqlQueries = await utils.loadSqlQueries('movie');
+        const sqlQueries = await utils.loadSqlQueries('movie/sql');
 
         const Movie_ID = utils.generateRandomID();
         const insertEvent = await pool.request()
@@ -17,7 +17,8 @@ const addMovie = async (data) => {
                             .input('Run_Time', sql.NVarChar, data.Run_Time)
                             .input('Thumbnail', sql.NVarChar, data.Thumbnail)
                             .query(sqlQueries.addMovie);   
-                            
+                       
+        console.log("Added movie: " + insertEvent.recordset);
         return insertEvent.recordset;
     } catch (error) {
         return error.message;
