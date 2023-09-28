@@ -1,5 +1,5 @@
 UPDATE [dbo].[User_Account]
-SET [Balance] = @Balance
+SET [Balance] = [Balance] - @Cost
 WHERE [Account_ID] = @Account_ID
 
 SELECT *

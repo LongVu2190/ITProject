@@ -36,7 +36,7 @@ const updateBalance = async (user) => {
 
         const update = await pool.request()
                         .input('Account_ID', sql.NVarChar, user.Account_ID)
-                        .input('Balance', sql.Int, user.Balance)
+                        .input('Cost', sql.Int, user.Cost)
                         .query(sqlQueries.updateBalance);
 
         return update.recordset;
