@@ -22,15 +22,14 @@ const addTicket = async (data) => {
     }
 }
 
-const getTicket = async (data) => {
+const getSeatsOfShowTime = async (ShowTime_ID) => {
     try {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries('ticket');
 
         const ticket = await pool.request()
-                            .input('ShowTime_ID', sql.NVarChar, data.ShowTime_ID)
-                            .input('Seat_Number', sql.Int, data.Seat_Number)
-                            .query(sqlQueries.getTicket);   
+                            .input('ShowTime_ID', sql.NVarChar, ShowTime_ID)
+                            .query(sqlQueries.getSeatsOfShowTime);   
                             
         return ticket.recordset;
     } catch (error) {
@@ -40,5 +39,5 @@ const getTicket = async (data) => {
 
 export default {
     addTicket,
-    getTicket
+    getSeatsOfShowTime
 }

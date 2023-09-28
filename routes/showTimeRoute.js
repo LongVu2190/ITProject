@@ -3,6 +3,7 @@ import {showTimeController} from '../controllers/index.js'
 const router = express.Router();
 
 router.post('/', showTimeController.addShowTime);
-router.get('/', showTimeController.getComingShowTime);
+router.get('/coming', showTimeController.getComingShowTime);
+router.get('/today', showTimeController.getTodayShowTime);
 
 export default router

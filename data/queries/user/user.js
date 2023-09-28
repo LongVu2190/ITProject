@@ -45,12 +45,14 @@ const updateBalance = async (user) => {
     }
 }
 
-const getBalance = async(ID) => {
+const getBalance = async(Account_ID) => {
     try {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries('user');
+
+        console.log(Account_ID);
         const event = await pool.request()
-                            .input('ID', sql.NVarChar, ID)
+                            .input('Account_ID', sql.NVarChar, Account_ID)
                             .query(sqlQueries.getBalance);
         return event.recordset;
     } catch (error) {

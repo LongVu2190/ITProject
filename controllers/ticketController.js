@@ -11,12 +11,12 @@ const addTicket = async (req, res, next) => {
     }
 }
 
-const getTicket = async (req, res, next) => {
+const getSeatsOfShowTime = async (req, res, next) => {
     try {
-        const data = req.body;
-        const ticket = await ticketQueries.getTicket(data);
+        const ShowTime_ID = req.body.ShowTime_ID;
+        const seats = await ticketQueries.getSeatsOfShowTime(ShowTime_ID);
         
-        res.send(ticket);
+        res.send(seats);
     } catch (error) {
         res.status(400).send(error.message);
     }
@@ -24,5 +24,5 @@ const getTicket = async (req, res, next) => {
 
 export default {
     addTicket,
-    getTicket
+    getSeatsOfShowTime
 }

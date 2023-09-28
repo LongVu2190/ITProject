@@ -3,6 +3,6 @@ import {ticketController} from '../controllers/index.js'
 const router = express.Router();
 
 router.post('/', ticketController.addTicket);
-router.get('/', ticketController.getTicket);
+router.get('/seats', ticketController.getSeatsOfShowTime);
 
 export default router

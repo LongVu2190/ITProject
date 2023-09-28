@@ -10,10 +10,12 @@ const addShowTime = async (data) => {
 
         const ShowTime_ID = utils.generateRandomID();
             
+        console.log(data.Date);
+
         const insertEvent = await pool.request()
                             .input('ShowTime_ID', sql.NVarChar, ShowTime_ID)
                             .input('Movie_ID', sql.NVarChar, data.Movie_ID)
-                            .input('Date', sql.Date, data.Date)
+                            .input('Date', sql.NVarChar, data.Date)
                             .input('Start_Time', sql.NVarChar, data.Start_Time)
                             .query(sqlQueries.addShowTime);   
        
@@ -23,23 +25,34 @@ const addShowTime = async (data) => {
     }
 }
 
-const getComingShowTime = async(Movie_ID) => {
+const getComingShowTime = async() => {
     try {
         let pool = await sql.connect(config.sql);
-        const sqlQueries = await utils.loadSqlQueries('showtime');
+        const sqlQueries = await utils.loadSqlQueries('showTime');
 
-        const currentShowTime = await pool.request()
-                                        .input('Movie_ID', sql.NVarChar, Movie_ID)
-                                        .query(sqlQueries.getComingShowTime);
+        const event = await pool.request().query(sqlQueries.getComingShowTime);
 
-        return currentShowTime.recordset;
-
+        return event.recordset;
     } catch (error) {
-        return error;
+        return error.message;
+    }
+}
+
+const getTodayShowTime = async() => {
+    try {
+        let pool = await sql.connect(config.sql);
+        const sqlQueries = await utils.loadSqlQueries('showTime');
+
+        const event = await pool.request().query(sqlQueries.getTodayShowTime);
+
+        return event.recordset;
+    } catch (error) {
+        return error.message;
     }
 }
 
 export default {
     addShowTime,
+    getTodayShowTime,
     getComingShowTime
 }

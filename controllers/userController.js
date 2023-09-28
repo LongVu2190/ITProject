@@ -26,8 +26,8 @@ const updateBalance = async (req, res, next) => {
 
 const getBalance = async (req, res, next) => {
     try {
-        const ID = req.body.ID;
-        const balance = await userQueries.getBalance(ID);
+        const Account_ID = req.body.Account_ID;
+        const balance = await userQueries.getBalance(Account_ID);
         res.send(balance);
     } catch (error) {
         res.status(400).send(error.message);
