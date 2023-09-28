@@ -51,8 +51,24 @@ const getTodayShowTime = async() => {
     }
 }
 
+const getCostOfShowTime = async(ShowTime_ID) => {
+    try {
+        let pool = await sql.connect(config.sql);
+        const sqlQueries = await utils.loadSqlQueries('showTime');
+
+        const cost = await pool.request()
+                                .input('ShowTime_ID', sql.NVarChar, ShowTime_ID)
+                                .query(sqlQueries.getCostOfShowTime);
+
+        return cost.recordset[0];
+    } catch (error) {
+        return error.message;
+    }
+}
+
 export default {
     addShowTime,
     getTodayShowTime,
-    getComingShowTime
+    getComingShowTime,
+    getCostOfShowTime
 }

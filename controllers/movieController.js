@@ -11,17 +11,6 @@ const addMovie = async (req, res, next) => {
     }
 }
 
-const getCurrentMovie = async (req, res, next) => {
-    try {
-        const movies = await movieQueries.getCurrentMovie();
-
-        res.send(movies);
-    } catch (error) {
-        res.status(400).send(error.message);
-    }
-}
-
 export default {
     addMovie,
-    getCurrentMovie
 }

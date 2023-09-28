@@ -35,7 +35,7 @@ const updateBalance = async (user) => {
         const sqlQueries = await utils.loadSqlQueries('user');
 
         const update = await pool.request()
-                        .input('ID', sql.NVarChar, user.ID)
+                        .input('Account_ID', sql.NVarChar, user.Account_ID)
                         .input('Balance', sql.Int, user.Balance)
                         .query(sqlQueries.updateBalance);
 
@@ -50,11 +50,10 @@ const getBalance = async(Account_ID) => {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries('user');
 
-        console.log(Account_ID);
         const event = await pool.request()
                             .input('Account_ID', sql.NVarChar, Account_ID)
                             .query(sqlQueries.getBalance);
-        return event.recordset;
+        return event.recordset[0];
     } catch (error) {
         return error.message;
     }

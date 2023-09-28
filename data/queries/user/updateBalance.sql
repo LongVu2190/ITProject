@@ -1,11 +1,7 @@
 UPDATE [dbo].[User_Account]
 SET [Balance] = @Balance
-WHERE [ID] = @ID
+WHERE [Account_ID] = @Account_ID
 
-SELECT  [UserName],
-        [Password],
-				[NickName],
-        [Email],
-				[Balance]
+SELECT *
 FROM [dbo].[User_Account]
-WHERE [ID] = @ID
+WHERE [Account_ID] = @Account_ID
