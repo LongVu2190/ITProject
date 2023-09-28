@@ -7,11 +7,11 @@ const addTicket = async (data) => {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries('ticket');
 
-        const ID = utils.generateRandomID();
+        const Ticket_ID = utils.generateRandomID();
 
         const insertTicket = await pool.request()
-                            .input('ID', sql.NVarChar, ID)
-                            .input('UserName', sql.NVarChar, data.UserName)
+                            .input('Ticket_ID', sql.NVarChar, Ticket_ID)
+                            .input('Account_ID', sql.NVarChar, data.Account_ID)
                             .input('ShowTime_ID', sql.NVarChar, data.ShowTime_ID)
                             .input('Seat_Number', sql.Int, data.Seat_Number)
                             .query(sqlQueries.addTicket);   

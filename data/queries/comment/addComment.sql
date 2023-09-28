@@ -1,22 +1,19 @@
 INSERT INTO [dbo].[User_Comment]
     (
-        [ID],
+        [Comment_ID],
         [Ticket_ID],
         [Rating_Point],
 		[Comment]
     )
 VALUES 
     (
-        @ID,
+        @Comment_ID,
         @Ticket_ID,
         @Rating_Point,
 		@Comment
     )
 
-SELECT  [ID],
-        [Ticket_ID],
-        [Rating_Point],
-		[Comment]
+SELECT *
 FROM [dbo].[User_Comment]
-WHERE [ID] = @ID
+WHERE [Comment_ID] = @Comment_ID
     

@@ -13,6 +13,7 @@ VALUES
 	    @Start_Time,
         0
     )
+    
 SELECT  *
 FROM [dbo].[ShowTime_List]
 WHERE [ShowTime_ID] = @ShowTime_ID
