@@ -97,7 +97,7 @@ const reduceBalance = async (data) => {
             .request()
             .input("Account_ID", sql.NVarChar, data.Account_ID)
             .input("Cost", sql.Int, data.Cost)
-            .query(sqlQueries.updateBalance);
+            .query(sqlQueries.reduceBalance);
 
         console.log("Updated balance of user: " + data.Account_ID);
         console.log("Balance reduced: " + data.Cost);
@@ -112,9 +112,34 @@ const reduceBalance = async (data) => {
     }
 };
 
+const rechargeBalance = async (data) => {
+    try {
+        let pool = await sql.connect(config.sql);
+        const sqlQueries = await utils.loadSqlQueries("user/sql");
+
+        const recharge = await pool
+            .request()
+            .input("Account_ID", sql.NVarChar, data.Account_ID)
+            .input("Recharge", sql.Int, data.Recharge)
+            .query(sqlQueries.rechargeBalance);
+
+        console.log("Recharged balance of user: " + data.Account_ID + " + " + data.Recharge);
+
+        return {
+            message: "Recharged successfully",
+            user: recharge.recordset,
+            totalRecharge: data.Recharge
+        };
+
+    } catch (error) {
+        return error.message;
+    }
+};
+
 export default {
     login,
     register,
-    reduceBalance,
     getBalance,
+    reduceBalance,
+    rechargeBalance
 };
