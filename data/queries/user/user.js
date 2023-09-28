@@ -8,11 +8,11 @@ const addUser = async (data) => {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries('user');
 
-        const ID = utils.generateRandomID();
+        const Account_ID = utils.generateRandomID();
         const hashPass = await bcrypt.hash(data.Password, parseInt(process.env.SALT_ROUNDS));
 
         const insertEvent = await pool.request()
-                            .input('ID', sql.NVarChar, ID)
+                            .input('Account_ID', sql.NVarChar, Account_ID)
                             .input('UserName', sql.NVarChar, data.UserName)
                             .input('Password', sql.NVarChar, hashPass)
                             .input('NickName', sql.NVarChar, data.NickName)

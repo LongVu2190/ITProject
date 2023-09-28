@@ -1,27 +1,30 @@
 INSERT INTO [dbo].[Movie_List]
     (
-        [ID],
         [Movie_ID],
         [Title],
 		[Cost],
         [Genre],
+        [Region],
+        [Run_Time],
 		[Thumbnail]
     )
 VALUES 
     (
-        @ID,
         @Movie_ID,
         @Title,
 		@Cost,
         @Genre,
+        @Region,
+        @Run_Time,
 		@Thumbnail
     )
 
-SELECT  [ID],
-        [Movie_ID],
+SELECT  [Movie_ID],
         [Title],
         [Cost],
         [Genre],
-        [Thumbnail]
+        [Region],
+        [Run_Time],
+		[Thumbnail]
 FROM [dbo].[Movie_List]
-WHERE [ID] = @ID
+WHERE [Movie_ID] = @Movie_ID

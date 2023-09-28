@@ -7,19 +7,20 @@ const addMovie = async (data) => {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries('movie');
 
-        const ID = utils.generateRandomID();
+        const Movie_ID = utils.generateRandomID();
         const insertEvent = await pool.request()
-                            .input('ID', sql.NVarChar, ID)
-                            .input('Movie_ID', sql.NVarChar, data.Movie_ID)
+                            .input('Movie_ID', sql.NVarChar, Movie_ID)
                             .input('Title', sql.NVarChar, data.Title)
                             .input('Cost', sql.Int, data.Cost)
                             .input('Genre', sql.NVarChar, data.Genre)
+                            .input('Region', sql.NVarChar, data.Region)
+                            .input('Run_Time', sql.NVarChar, data.Run_Time)
                             .input('Thumbnail', sql.NVarChar, data.Thumbnail)
                             .query(sqlQueries.addMovie);   
                             
         return insertEvent.recordset;
     } catch (error) {
-        return error;
+        return error.message;
     }
 }
 
