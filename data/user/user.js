@@ -62,7 +62,7 @@ const register = async (data) => {
             .query(sqlQueries.register);
 
         return {
-            message: "Create account succesfully",
+            message: "Created account succesfully",
             data: insertUser.recordset,
         };
     } catch (error) {
