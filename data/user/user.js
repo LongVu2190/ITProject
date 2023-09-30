@@ -41,7 +41,7 @@ const login = async (data) => {
                     expiresIn: "10 days",
                 }
             );
-
+            
             existingUser.Token = token;
 
             // Return message
