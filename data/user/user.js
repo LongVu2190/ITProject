@@ -15,7 +15,7 @@ const login = async (data) => {
 
         if (user.recordset[0] == null) {
             return {
-                message: "Account does not exist",
+                message: "Wrong email or password",
             };
         }
 
@@ -31,7 +31,7 @@ const login = async (data) => {
             };
         } else {
             return {
-                message: "Wrong password",
+                message: "Wrong email or password",
             };
         }
 
