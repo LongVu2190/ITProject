@@ -2,39 +2,58 @@ import utils from "../utils.js";
 import config from "../../config.js";
 import sql from "mssql";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const login = async (data) => {
     try {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries("user/sql");
-        
-        const user = await pool
+
+        // Find user in database
+        let existingUser = await pool
             .request()
             .input("Email", sql.NVarChar, data.Email)
             .query(sqlQueries.login);
 
-        if (user.recordset[0] == null) {
+        existingUser = existingUser.recordset[0];
+
+        // Check if exist
+        if (existingUser.Password == null) {
             return {
                 message: "Wrong email or password",
             };
         }
 
-        let checkLogin = await bcrypt.compare(
+        // Check password
+        let isMatch = await bcrypt.compare(
             data.Password,
-            user.recordset[0].Password
+            existingUser.Password
         );
 
-        if (checkLogin) {
+        if (isMatch) {
+            // Create JWS
+            let token = jwt.sign(
+                {
+                    data: existingUser,
+                },
+                process.env.JWT_SECRET,
+                {
+                    expiresIn: "10 days",
+                }
+            );
+
+            existingUser.Token = token;
+
+            // Return message
             return {
                 message: "Login successfully",
-                data: user.recordset,
+                data: existingUser,
             };
         } else {
             return {
                 message: "Wrong email or password",
             };
         }
-
     } catch (error) {
         return error.message;
     }
@@ -67,9 +86,10 @@ const register = async (data) => {
         };
     } catch (error) {
         if (error.number == 2601) {
-            throw new Error("Account exist, please use another email or username");
-        } 
-        else return error.message;
+            throw new Error(
+                "Account exist, please use another email or username"
+            );
+        } else return error.message;
     }
 };
 
@@ -104,9 +124,8 @@ const reduceBalance = async (data) => {
 
         return {
             user: update.recordset,
-            totalCost: data.Cost
+            totalCost: data.Cost,
         };
-
     } catch (error) {
         return error.message;
     }
@@ -123,14 +142,18 @@ const rechargeBalance = async (data) => {
             .input("Recharge", sql.Int, data.Recharge)
             .query(sqlQueries.rechargeBalance);
 
-        console.log("Recharged balance of user: " + data.Account_ID + " + " + data.Recharge);
+        console.log(
+            "Recharged balance of user: " +
+                data.Account_ID +
+                " + " +
+                data.Recharge
+        );
 
         return {
             message: "Recharged successfully",
             user: recharge.recordset,
-            totalRecharge: data.Recharge
+            totalRecharge: data.Recharge,
         };
-
     } catch (error) {
         return error.message;
     }
@@ -141,5 +164,5 @@ export default {
     register,
     getBalance,
     reduceBalance,
-    rechargeBalance
+    rechargeBalance,
 };
