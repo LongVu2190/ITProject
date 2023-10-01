@@ -15,12 +15,13 @@ const login = async (data) => {
             .input("Email", sql.NVarChar, data.Email)
             .query(sqlQueries.login);
 
+            
         existingUser = existingUser.recordset[0];
 
         // Check if exist
-        if (existingUser.Password == null) {
+        if (existingUser == null) {
             return {
-                message: "Wrong email or password",
+                message: 'Wrong email or password'
             };
         }
 
@@ -38,7 +39,7 @@ const login = async (data) => {
                 },
                 process.env.JWT_SECRET,
                 {
-                    expiresIn: "10 days",
+                    expiresIn: '1 day',
                 }
             );
             
@@ -47,11 +48,11 @@ const login = async (data) => {
             // Return message
             return {
                 message: "Login successfully",
-                data: existingUser,
+                ...existingUser,
             };
         } else {
             return {
-                message: "Wrong email or password",
+                message: 'Wrong email or password',
             };
         }
     } catch (error) {
@@ -81,12 +82,12 @@ const register = async (data) => {
             .query(sqlQueries.register);
 
         return {
-            message: "Created account succesfully",
-            data: insertUser.recordset,
+            Message: "Created account succesfully",
+            ...insertUser.recordset,
         };
     } catch (error) {
         if (error.number == 2601) {
-            throw new Error(
+            throw new Error (
                 "Account exist, please use another email or username"
             );
         } else return error.message;
@@ -142,6 +143,11 @@ const rechargeBalance = async (data) => {
             .input("Recharge", sql.Int, data.Recharge)
             .query(sqlQueries.rechargeBalance);
 
+        if (recharge.recordset[0] == null) {
+            return {
+                message: "Account does not exist",
+            };
+        }
         console.log(
             "Recharged balance of user: " +
                 data.Account_ID +
@@ -151,8 +157,8 @@ const rechargeBalance = async (data) => {
 
         return {
             message: "Recharged successfully",
-            user: recharge.recordset,
-            totalRecharge: data.Recharge,
+            ...recharge.recordset[0],
+            TotalRecharge: data.Recharge,
         };
     } catch (error) {
         return error.message;
