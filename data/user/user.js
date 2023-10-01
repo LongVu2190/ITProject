@@ -14,8 +14,7 @@ const login = async (data) => {
             .request()
             .input("Email", sql.NVarChar, data.Email)
             .query(sqlQueries.login);
-
-            
+           
         existingUser = existingUser.recordset[0];
 
         // Check if exist
