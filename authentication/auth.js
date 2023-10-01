@@ -25,9 +25,9 @@ export default function checkToken(req, res, next) {
             return;
         }
 
-    } catch (exception) {
-        res.status(400).json({
-            message: exception.message
+    } catch (error) {
+        res.status(400).send({
+            message: error.message
         })
     }
 }
