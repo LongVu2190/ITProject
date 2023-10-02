@@ -1,5 +1,5 @@
 import utils from "../utils.js";
-import config from "../../config.js";
+import config from "../../config/config.js";
 import sql from "mssql";
 import users from "../user/user.js";
 import st from "../showTime/showTime.js";
