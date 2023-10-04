@@ -1,7 +1,7 @@
 INSERT INTO [dbo].[User_Account]
     (
         [accountId],
-        [userName],
+        [username],
         [password],
 		[nickName],
         [email],
@@ -10,7 +10,7 @@ INSERT INTO [dbo].[User_Account]
 VALUES 
     (
         @accountId,
-        @userName,
+        @username,
         @password,
 		@nickName,
         @email,

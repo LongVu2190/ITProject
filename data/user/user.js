@@ -76,7 +76,7 @@ const register = async (data) => {
         const insertUser = await pool
             .request()
             .input("accountId", sql.NVarChar, accountId)
-            .input("userName", sql.NVarChar, data.userName)
+            .input("username", sql.NVarChar, data.username)
             .input("password", sql.NVarChar, hashPass)
             .input("nickName", sql.NVarChar, data.nickName)
             .input("email", sql.NVarChar, data.email)
@@ -89,7 +89,7 @@ const register = async (data) => {
     } catch (error) {
         if (error.number == 2601) {
             throw new Error (
-                "Account exist, please use another email or userName"
+                "Account exist, please use another email or username"
             );
         } else return error.message;
     }

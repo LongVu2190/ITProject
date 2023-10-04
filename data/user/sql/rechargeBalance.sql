@@ -3,7 +3,7 @@ SET [balance] = [balance] + @recharge
 WHERE [accountId] = @accountId
 
 SELECT  [accountId],
-        [userName],
+        [username],
         [nickName],
         [email],
         [balance]
