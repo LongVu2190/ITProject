@@ -64,20 +64,20 @@ const register = async (data) => {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries("user/sql");
 
-        const Account_ID = utils.generateRandomID();
+        const accountId = utils.generateRandomID();
 
         const hashPass = await bcrypt.hash(
-            data.Password,
+            data.password,
             parseInt(process.env.SALT_ROUNDS)
         );
 
         const insertUser = await pool
             .request()
-            .input("Account_ID", sql.NVarChar, Account_ID)
-            .input("UserName", sql.NVarChar, data.UserName)
+            .input("Account_ID", sql.NVarChar, accountId)
+            .input("UserName", sql.NVarChar, data.userName)
             .input("Password", sql.NVarChar, hashPass)
-            .input("NickName", sql.NVarChar, data.NickName)
-            .input("Email", sql.NVarChar, data.Email)
+            .input("NickName", sql.NVarChar, data.nickName)
+            .input("Email", sql.NVarChar, data.email)
             .query(sqlQueries.register);
 
         return {
@@ -99,7 +99,7 @@ const getBalance = async (data) => {
 
         const event = await pool
             .request()
-            .input("Account_ID", sql.NVarChar, data.Account_ID)
+            .input("Account_ID", sql.NVarChar, data.accountId)
             .query(sqlQueries.getBalance);
         return event.recordset[0];
     } catch (error) {
@@ -114,16 +114,16 @@ const reduceBalance = async (data) => {
 
         const update = await pool
             .request()
-            .input("Account_ID", sql.NVarChar, data.Account_ID)
-            .input("Cost", sql.Int, data.Cost)
+            .input("Account_ID", sql.NVarChar, data.accountId)
+            .input("Cost", sql.Int, data.cost)
             .query(sqlQueries.reduceBalance);
 
-        console.log("Updated balance of user: " + data.Account_ID);
-        console.log("Balance reduced: " + data.Cost);
+        console.log("Updated balance of user: " + data.accountId);
+        console.log("Balance reduced: " + data.cost);
 
         return {
             user: update.recordset,
-            totalCost: data.Cost,
+            totalCost: data.cost,
         };
     } catch (error) {
         return error.message;
@@ -137,8 +137,8 @@ const rechargeBalance = async (data) => {
 
         const recharge = await pool
             .request()
-            .input("Account_ID", sql.NVarChar, data.Account_ID)
-            .input("Recharge", sql.Int, data.Recharge)
+            .input("Account_ID", sql.NVarChar, data.accountId)
+            .input("Recharge", sql.Int, data.recharge)
             .query(sqlQueries.rechargeBalance);
 
         if (recharge.recordset[0] == null) {
@@ -148,15 +148,15 @@ const rechargeBalance = async (data) => {
         }
         console.log(
             "Recharged balance of user: " +
-                data.Account_ID +
+                data.accountId +
                 " + " +
-                data.Recharge
+                data.recharge
         );
 
         return {
             message: "Recharged successfully",
             ...recharge.recordset[0],
-            TotalRecharge: data.Recharge,
+            TotalRecharge: data.recharge,
         };
     } catch (error) {
         return error.message;

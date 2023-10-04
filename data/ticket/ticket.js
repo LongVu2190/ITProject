@@ -50,7 +50,7 @@ const buyTickets = async (data) => {
         const cost = await st.getCostOfShowTime(data);
 
         // Check balance of user
-        if (userBalance.Balance < cost.Cost * data.Seat_Number.length) {
+        if (userBalance.Balance < cost.Cost * data.seatNumber.length) {
             return {
                 message: "Your balance is not enough",
             };
@@ -59,8 +59,8 @@ const buyTickets = async (data) => {
         // Check if seats are available
         var checkSeat = { value: true };
 
-        for (const seat of data.Seat_Number) {
-            await checkSeats(data.ShowTime_ID, seat, checkSeat);
+        for (const seat of data.seatNumber) {
+            await checkSeats(data.showTimeId, seat, checkSeat);
         }
 
         if (!checkSeat.value) {
@@ -71,13 +71,13 @@ const buyTickets = async (data) => {
         console.log("Checked no seats are duplicated");
 
         // Add ticket
-        for (const seat of data.Seat_Number) {
-            await addTicket(data.Account_ID, data.ShowTime_ID, seat);
+        for (const seat of data.seatNumber) {
+            await addTicket(data.accountId, data.showTimeId, seat);
         }
 
         const boughtUser = await users.reduceBalance({
-            Account_ID: data.Account_ID,
-            Cost: cost.Cost * data.Seat_Number.length,
+            Account_ID: data.accountId,
+            Cost: cost.Cost * data.seatNumber.length,
         });
 
         return {

@@ -9,13 +9,13 @@ const addMovie = async (data) => {
 
         const Movie_ID = utils.generateRandomID();
         const insertEvent = await pool.request()
-                            .input('Movie_ID', sql.NVarChar, Movie_ID)
-                            .input('Title', sql.NVarChar, data.Title)
-                            .input('Cost', sql.Int, data.Cost)
-                            .input('Genre', sql.NVarChar, data.Genre)
-                            .input('Region', sql.NVarChar, data.Region)
-                            .input('Run_Time', sql.NVarChar, data.Run_Time)
-                            .input('Thumbnail', sql.NVarChar, data.Thumbnail)
+                            .input('Movie_ID', sql.NVarChar, movieId)
+                            .input('Title', sql.NVarChar, data.title)
+                            .input('Cost', sql.Int, data.cost)
+                            .input('Genre', sql.NVarChar, data.genre)
+                            .input('Region', sql.NVarChar, data.region)
+                            .input('Run_Time', sql.NVarChar, data.runTime)
+                            .input('Thumbnail', sql.NVarChar, data.thumbnail)
                             .query(sqlQueries.addMovie);   
                        
         console.log("Added movie: " + insertEvent.recordset);

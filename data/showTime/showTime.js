@@ -8,13 +8,13 @@ const addShowTime = async (data) => {
 
         const sqlQueries = await utils.loadSqlQueries('showTime/sql');
 
-        const ShowTime_ID = utils.generateRandomID();
+        const showTimeId = utils.generateRandomID();
             
         const insertEvent = await pool.request()
-                            .input('ShowTime_ID', sql.NVarChar, ShowTime_ID)
-                            .input('Movie_ID', sql.NVarChar, data.Movie_ID)
-                            .input('Date', sql.NVarChar, data.Date)
-                            .input('Start_Time', sql.NVarChar, data.Start_Time)
+                            .input('ShowTime_ID', sql.NVarChar, showTimeId)
+                            .input('Movie_ID', sql.NVarChar, data.movieId)
+                            .input('Date', sql.NVarChar, data.date)
+                            .input('Start_Time', sql.NVarChar, data.startTime)
                             .query(sqlQueries.addShowTime);   
        
         console.log("Added showtime: " + insertEvent.recordset);
@@ -62,7 +62,7 @@ const getSeatsOfShowTime = async (data) => {
 
         const ticket = await pool
             .request()
-            .input("ShowTime_ID", sql.NVarChar, data.ShowTime_ID)
+            .input("ShowTime_ID", sql.NVarChar, data.showTimeId)
             .query(sqlQueries.getSeatsOfShowTime);
 
         return ticket.recordset;
@@ -78,7 +78,7 @@ const getCostOfShowTime = async(data) => {
         const sqlQueries = await utils.loadSqlQueries('showTime/sql');
 
         const cost = await pool.request()
-                                .input('ShowTime_ID', sql.NVarChar, data.ShowTime_ID)
+                                .input('ShowTime_ID', sql.NVarChar, data.showTimeId)
                                 .query(sqlQueries.getCostOfShowTime);
 
         return cost.recordset[0];
