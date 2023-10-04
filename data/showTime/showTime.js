@@ -44,6 +44,11 @@ const getTodayShowTime = async() => {
 
         const event = await pool.request().query(sqlQueries.getTodayShowTime);
 
+        if (event.recordset == "") {
+            return {
+                message: "No show time today",
+            }
+        }
         return event.recordset;
     } catch (error) {
         return error.message;
