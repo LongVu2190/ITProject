@@ -10,15 +10,19 @@ const addShowTime = async (data) => {
 
         const showTimeId = utils.generateRandomID();
             
-        const insertEvent = await pool.request()
-                            .input('ShowTime_ID', sql.NVarChar, showTimeId)
-                            .input('Movie_ID', sql.NVarChar, data.movieId)
-                            .input('Date', sql.NVarChar, data.date)
-                            .input('Start_Time', sql.NVarChar, data.startTime)
+        const insertShowTime = await pool.request()
+                            .input('showTimeId', sql.NVarChar, showTimeId)
+                            .input('movieId', sql.NVarChar, data.movieId)
+                            .input('showingDate', sql.NVarChar, data.showingDate)
+                            .input('startTime', sql.NVarChar, data.startTime)
                             .query(sqlQueries.addShowTime);   
        
-        console.log("Added showtime: " + insertEvent.recordset);
-        return insertEvent.recordset;
+        console.log("Added showtime: " + insertShowTime.recordset[0]);
+
+        return {
+            message: "Add showtime successfully",
+            ...insertShowTime.recordset[0]
+        }
     } catch (error) {
         return error.message;
     }
@@ -29,27 +33,32 @@ const getComingShowTime = async() => {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries('showTime/sql');
 
-        const event = await pool.request().query(sqlQueries.getComingShowTime);
+        const showTimes = await pool.request().query(sqlQueries.getComingShowTime);
 
-        return event.recordset;
+        if (showTimes.recordset == "") {
+            return {
+                message: "No coming showtime",
+            }
+        }
+        return showTimes.recordset;
     } catch (error) {
         return error.message;
     }
 }
 
-const getTodayShowTime = async() => {
+const getNowShowTime = async() => {
     try {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries('showTime/sql');
 
-        const event = await pool.request().query(sqlQueries.getTodayShowTime);
+        const showTimes = await pool.request().query(sqlQueries.getNowShowTime);
 
-        if (event.recordset == "") {
+        if (showTimes.recordset == "") {
             return {
                 message: "No show time today",
             }
         }
-        return event.recordset[0];
+        return showTimes.recordset;
     } catch (error) {
         return error.message;
     }
@@ -60,28 +69,29 @@ const getSeatsOfShowTime = async (data) => {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries("ticket/sql");
 
-        const ticket = await pool
+        const seats = await pool
             .request()
-            .input("ShowTime_ID", sql.NVarChar, data.showTimeId)
+            .input("showTimeId", sql.NVarChar, data.showTimeId)
             .query(sqlQueries.getSeatsOfShowTime);
 
-        return ticket.recordset;
+        const showTimeSeats = seats.recordset.map(item => item.seatNumber);
+
+        return showTimeSeats;
     } catch (error) {
-        return error;
+        return error.message;
     }
-};
+}
 
-
-const getCostOfShowTime = async(data) => {
+const getCostOfShowTime = async(showTimeId) => {
     try {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries('showTime/sql');
 
-        const cost = await pool.request()
-                                .input('ShowTime_ID', sql.NVarChar, data.showTimeId)
+        const showTime = await pool.request()
+                                .input('showTimeId', sql.NVarChar, showTimeId)
                                 .query(sqlQueries.getCostOfShowTime);
 
-        return cost.recordset[0];
+        return showTime.recordset[0].cost;
     } catch (error) {
         return error.message;
     }
@@ -89,7 +99,7 @@ const getCostOfShowTime = async(data) => {
 
 export default {
     addShowTime,
-    getTodayShowTime,
+    getNowShowTime,
     getComingShowTime,
     getCostOfShowTime,
     getSeatsOfShowTime

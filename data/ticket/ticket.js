@@ -4,41 +4,43 @@ import sql from "mssql";
 import users from "../user/user.js";
 import st from "../showTime/showTime.js";
 
-async function checkSeats(ShowTime_ID, seat, checkSeat) {
+async function checkSeats(showTimeId, seatNumber, isSeated) {
     try {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries("ticket/sql");
 
+        // Select that seatNumber from database
         const availableSeat = await pool
             .request()
-            .input("ShowTime_ID", sql.NVarChar, ShowTime_ID)
-            .input("Seat_Number", sql.Int, seat)
+            .input("showTimeId", sql.NVarChar, showTimeId)
+            .input("seatNumber", sql.Int, seatNumber)
             .query(sqlQueries.checkAvailableSeat);
 
+        // If that seatNumber exists, value of isSeated -> true
         if ((await availableSeat.recordset[0]) != null) {
-            checkSeat.value = false;
+            isSeated.value = true;
         }
     } catch (error) {
-        return error;
+        return error.message;
     }
 }
 
-async function addTicket(Account_ID, ShowTime_ID, seat) {
+async function addTicket(accountId, showTimeId, seatNumber) {
     try {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries("ticket/sql");
 
-        const Ticket_ID = utils.generateRandomID();
+        const ticketId = utils.generateRandomID();
 
         await pool
             .request()
-            .input("Ticket_ID", sql.NVarChar, Ticket_ID)
-            .input("Account_ID", sql.NVarChar, Account_ID)
-            .input("ShowTime_ID", sql.NVarChar, ShowTime_ID)
-            .input("Seat_Number", sql.Int, seat)
+            .input("ticketId", sql.NVarChar, ticketId)
+            .input("accountId", sql.NVarChar, accountId)
+            .input("showTimeId", sql.NVarChar, showTimeId)
+            .input("seatNumber", sql.Int, seatNumber)
             .query(sqlQueries.addTicket);
 
-        console.log("Bought succesfully ticket: " + Ticket_ID);
+        console.log("Buy succesfully ticket: " + ticketId);
     } catch (error) {
         return error;
     }
@@ -46,47 +48,46 @@ async function addTicket(Account_ID, ShowTime_ID, seat) {
 
 const buyTickets = async (data) => {
     try {
-        const userBalance = await users.getBalance(data);
-        const cost = await st.getCostOfShowTime(data);
+        const userBalance = await users.getBalanceOfUser(data.accountId);
+        const cost = await st.getCostOfShowTime(data.showTimeId);
 
-        // Check balance of user
-        if (userBalance.Balance < cost.Cost * data.seatNumber.length) {
+        // Check balance of user enough or not
+        if (userBalance < cost * data.seatNumbers.length) {
             return {
                 message: "Your balance is not enough",
             };
         }
 
         // Check if seats are available
-        var checkSeat = { value: true };
+        var isSeated = { value: false };
 
-        for (const seat of data.seatNumber) {
-            await checkSeats(data.showTimeId, seat, checkSeat);
+        for (const seatNumber of data.seatNumbers) {
+            await checkSeats(data.showTimeId, seatNumber, isSeated);
         }
 
-        if (!checkSeat.value) {
+        if (isSeated.value) {
             return {
                 message: "Your chosen seats are not available now",
             };
         }
-        console.log("Checked no seats are duplicated");
 
         // Add ticket
-        for (const seat of data.seatNumber) {
-            await addTicket(data.accountId, data.showTimeId, seat);
+        for (const seatNumber of data.seatNumbers) {
+            await addTicket(data.accountId, data.showTimeId, seatNumber);
         }
 
         const boughtUser = await users.reduceBalance({
             accountId: data.accountId,
-            cost: cost.Cost * data.seatNumber.length,
+            totalCost: cost * data.seatNumbers.length,
         });
 
         return {
-            message: "Bought tickets successfully",
-            data: boughtUser
+            message: "Buy tickets successfully",
+            ...boughtUser
         };
 
     } catch (error) {
-        return error;
+        return error.message;
     }
 };
 

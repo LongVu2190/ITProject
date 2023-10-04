@@ -22,7 +22,7 @@ const deleteComment = async (req, res, next) => {
 
 const getCommentByMovie = async (req, res, next) => {
     try {
-        const data = req.body.Movie_ID;
+        const data = req.body.movieId;
         const response = await commentQueries.getCommentByMovie(data);
         res.send(response);
     } catch (error) {

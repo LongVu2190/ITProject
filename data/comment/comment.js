@@ -10,16 +10,19 @@ const addComment = async (data) => {
         const commentId = utils.generateRandomID();
 
         const insertComment = await pool.request()
-                            .input('Comment_ID', sql.NVarChar, commentId)
-                            .input('Ticket_ID', sql.NVarChar, data.ticketId)
-                            .input('Rating_Point', sql.Int, data.ratingPoint)
-                            .input('Comment', sql.NVarChar, data.comment)
+                            .input('commentId', sql.NVarChar, commentId)
+                            .input('ticketId', sql.NVarChar, data.ticketId)
+                            .input('ratingPoint', sql.Int, data.ratingPoint)
+                            .input('comment', sql.NVarChar, data.comment)
                             .query(sqlQueries.addComment);   
         
         console.log('Added comment ID: ' + commentId);                    
-        return insertComment.recordset;
+        return {
+            message: "Comment successfully",
+            ...insertComment.recordset[0]
+        }
     } catch (error) {
-        return error;
+        return error.message;
     }
 }
 
@@ -28,8 +31,8 @@ const deleteComment = async (data) => {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries('comment/sql');
 
-        const comment = await pool.request()
-                            .input('Comment_ID', sql.NVarChar, data.commentID)
+        await pool.request()
+                            .input('commentId', sql.NVarChar, data.commentId)
                             .query(sqlQueries.deleteComment);
 
         console.log('Deleted comment ID: ' + data.commentID);
@@ -48,13 +51,13 @@ const getCommentByMovie = async(movieId) => {
         const sqlQueries = await utils.loadSqlQueries('comment/sql');
 
         const comments = await pool.request()
-                            .input('Movie_ID', sql.NVarChar, movieId)
+                            .input('movieId', sql.NVarChar, movieId)
                             .query(sqlQueries.getCommentByMovie);
 
         return comments.recordset;
 
     } catch (error) {
-        return error;
+        return error.message;
     }
 }
 

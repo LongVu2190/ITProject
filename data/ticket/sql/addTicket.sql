@@ -1,19 +1,19 @@
 INSERT INTO [dbo].[Ticket_List]
     (
-        [Ticket_ID],
-        [Account_ID],
-        [ShowTime_ID],
-		[Seat_Number]
+        [ticketId],
+        [accountId],
+        [showTimeId],
+		[seatNumber]
     )
 VALUES 
     (
-        @Ticket_ID,
-        @Account_ID,
-        @ShowTime_ID,
-		@Seat_Number
+        @ticketId,
+        @accountId,
+        @showTimeId,
+		@seatNumber
     )
 
 SELECT  *
 FROM [dbo].[Ticket_List]
-WHERE [Ticket_ID] = @Ticket_ID
+WHERE [ticketId] = @ticketId
     

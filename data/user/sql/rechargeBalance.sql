@@ -1,11 +1,11 @@
 UPDATE [dbo].[User_Account]
-SET [Balance] = [Balance] + @Recharge
-WHERE [Account_ID] = @Account_ID
+SET [balance] = [balance] + @recharge
+WHERE [accountId] = @accountId
 
-SELECT  [Account_ID],
-        [UserName],
-        [NickName],
-        [Email],
-        [Balance]
+SELECT  [accountId],
+        [userName],
+        [nickName],
+        [email],
+        [balance]
 FROM [dbo].[User_Account]
-WHERE [Account_ID] = @Account_ID
+WHERE [accountId] = @accountId

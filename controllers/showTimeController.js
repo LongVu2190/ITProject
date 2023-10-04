@@ -21,9 +21,9 @@ const getComingShowTime = async (req, res, next) => {
     }
 }
 
-const getTodayShowTime = async (req, res, next) => {
+const getNowShowTime = async (req, res, next) => {
     try {
-        const showTime = await showTimeQueries.getTodayShowTime();
+        const showTime = await showTimeQueries.getNowShowTime();
 
         res.send(showTime);
     } catch (error) {
@@ -45,6 +45,6 @@ const getSeatsOfShowTime = async (req, res, next) => {
 export default {
     addShowTime,
     getComingShowTime,
-    getTodayShowTime,
+    getNowShowTime,
     getSeatsOfShowTime
 }

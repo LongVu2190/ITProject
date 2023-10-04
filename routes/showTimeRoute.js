@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.post('/', showTimeController.addShowTime);
 router.get('/coming', showTimeController.getComingShowTime);
-router.get('/today', showTimeController.getTodayShowTime);
+router.get('/now', showTimeController.getNowShowTime);
 router.get('/seats', showTimeController.getSeatsOfShowTime);
 
 export default router

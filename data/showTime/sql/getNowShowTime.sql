@@ -3,11 +3,11 @@ SELECT 	st.showTimeId,
 				st.showingDate,
 				st.startTime,
 				st.endTime,
-				mv.title,
+				mv.Title,
 				mv.cost,
 				mv.genre,
 				mv.runTime,
 				mv.thumbnail,
 				mv.region
 FROM [dbo].[ShowTime_List] st inner join [dbo].[Movie_List] mv on st.movieId = mv.movieId
-WHERE st.[showingDate] > CAST( GETDATE() AS Date )
+WHERE st.[showingDate] >= CAST( GETDATE() AS Date )

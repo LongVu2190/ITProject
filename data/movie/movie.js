@@ -8,18 +8,23 @@ const addMovie = async (data) => {
         const sqlQueries = await utils.loadSqlQueries('movie/sql');
 
         const movieId = utils.generateRandomID();
-        const insertEvent = await pool.request()
-                            .input('Movie_ID', sql.NVarChar, movieId)
+
+        const insertMovie = await pool.request()
+                            .input('movieId', sql.NVarChar, movieId)
                             .input('Title', sql.NVarChar, data.title)
-                            .input('Cost', sql.Int, data.cost)
-                            .input('Genre', sql.NVarChar, data.genre)
-                            .input('Region', sql.NVarChar, data.region)
-                            .input('Run_Time', sql.NVarChar, data.runTime)
-                            .input('Thumbnail', sql.NVarChar, data.thumbnail)
+                            .input('cost', sql.Int, data.cost)
+                            .input('genre', sql.NVarChar, data.genre)
+                            .input('region', sql.NVarChar, data.region)
+                            .input('runTime', sql.NVarChar, data.runTime)
+                            .input('thumbnail', sql.NVarChar, data.thumbnail)
                             .query(sqlQueries.addMovie);   
                        
-        console.log("Added movie: " + insertEvent.recordset);
-        return insertEvent.recordset;
+        console.log("Added movie: " + insertMovie.recordset[0]);
+
+        return {
+            message: "Add movie successfuly",
+            ...insertMovie.recordset[0]
+        }
     } catch (error) {
         return error.message;
     }

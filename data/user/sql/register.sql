@@ -1,22 +1,22 @@
 INSERT INTO [dbo].[User_Account]
     (
-        [Account_ID],
-        [UserName],
-        [Password],
-		[NickName],
-        [Email],
-		[Balance]
+        [accountId],
+        [userName],
+        [password],
+		[nickName],
+        [email],
+		[balance]
     )
 VALUES 
     (
-        @Account_ID,
-        @UserName,
-        @Password,
-		@NickName,
-        @Email,
+        @accountId,
+        @userName,
+        @password,
+		@nickName,
+        @email,
 		0
     )
 
 SELECT  *
 FROM [dbo].[User_Account]
-WHERE [Account_ID] = @Account_ID
+WHERE [accountId] = @accountId

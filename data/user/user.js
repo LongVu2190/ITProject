@@ -7,12 +7,13 @@ import jwt from "jsonwebtoken";
 const login = async (data) => {
     try {
         let pool = await sql.connect(config.sql);
+
         const sqlQueries = await utils.loadSqlQueries("user/sql");
 
         // Find user in database
         let existingUser = await pool
             .request()
-            .input("Email", sql.NVarChar, data.email)
+            .input("email", sql.NVarChar, data.email)
             .query(sqlQueries.login);
            
         existingUser = existingUser.recordset[0];
@@ -26,8 +27,8 @@ const login = async (data) => {
 
         // Check password
         let isMatch = await bcrypt.compare(
-            data.Password,
-            existingUser.Password
+            data.password,
+            existingUser.password
         );
 
         if (isMatch) {
@@ -44,6 +45,7 @@ const login = async (data) => {
             
             existingUser.token = token;
 
+            console.log(token);
             // Return message
             return {
                 message: "Login successfully",
@@ -73,35 +75,37 @@ const register = async (data) => {
 
         const insertUser = await pool
             .request()
-            .input("Account_ID", sql.NVarChar, accountId)
-            .input("UserName", sql.NVarChar, data.userName)
-            .input("Password", sql.NVarChar, hashPass)
-            .input("NickName", sql.NVarChar, data.nickName)
-            .input("Email", sql.NVarChar, data.email)
+            .input("accountId", sql.NVarChar, accountId)
+            .input("userName", sql.NVarChar, data.userName)
+            .input("password", sql.NVarChar, hashPass)
+            .input("nickName", sql.NVarChar, data.nickName)
+            .input("email", sql.NVarChar, data.email)
             .query(sqlQueries.register);
 
         return {
+            message: "Register successfully",
             ...insertUser.recordset[0],
         };
     } catch (error) {
         if (error.number == 2601) {
             throw new Error (
-                "Account exist, please use another email or username"
+                "Account exist, please use another email or userName"
             );
         } else return error.message;
     }
 };
 
-const getBalance = async (data) => {
+const getBalanceOfUser = async (accountId) => {
     try {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries("user/sql");
 
-        const event = await pool
+        const user = await pool
             .request()
-            .input("Account_ID", sql.NVarChar, data.accountId)
-            .query(sqlQueries.getBalance);
-        return event.recordset[0];
+            .input("accountId", sql.NVarChar, accountId)
+            .query(sqlQueries.getBalanceOfUser);
+
+        return user.recordset[0].balance;
     } catch (error) {
         return error.message;
     }
@@ -112,18 +116,18 @@ const reduceBalance = async (data) => {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries("user/sql");
 
-        const update = await pool
+        console.log(data);
+        await pool
             .request()
-            .input("Account_ID", sql.NVarChar, data.accountId)
-            .input("Cost", sql.Int, data.cost)
+            .input("accountId", sql.NVarChar, data.accountId)
+            .input("totalCost", sql.Int, data.totalCost)
             .query(sqlQueries.reduceBalance);
 
         console.log("Updated balance of user: " + data.accountId);
-        console.log("Balance reduced: " + data.cost);
+        console.log("balance reduced: " + data.totalCost);
 
         return {
-            user: update.recordset,
-            totalCost: data.cost,
+            totalCost: data.totalCost,
         };
     } catch (error) {
         return error.message;
@@ -135,10 +139,12 @@ const rechargeBalance = async (data) => {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries("user/sql");
 
+        console.log(data);
+
         const recharge = await pool
             .request()
-            .input("Account_ID", sql.NVarChar, data.accountId)
-            .input("Recharge", sql.Int, data.recharge)
+            .input("accountId", sql.NVarChar, data.accountId)
+            .input("recharge", sql.Int, data.recharge)
             .query(sqlQueries.rechargeBalance);
 
         if (recharge.recordset[0] == null) {
@@ -166,7 +172,7 @@ const rechargeBalance = async (data) => {
 export default {
     login,
     register,
-    getBalance,
+    getBalanceOfUser,
     reduceBalance,
     rechargeBalance,
 };
