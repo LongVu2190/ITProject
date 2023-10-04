@@ -49,7 +49,7 @@ const getTodayShowTime = async() => {
                 message: "No show time today",
             }
         }
-        return event.recordset;
+        return event.recordset[0];
     } catch (error) {
         return error.message;
     }

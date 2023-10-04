@@ -81,8 +81,7 @@ const register = async (data) => {
             .query(sqlQueries.register);
 
         return {
-            Message: "Created account succesfully",
-            ...insertUser.recordset,
+            ...insertUser.recordset[0],
         };
     } catch (error) {
         if (error.number == 2601) {
