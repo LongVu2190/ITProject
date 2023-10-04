@@ -7,7 +7,7 @@ const addMovie = async (data) => {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries('movie/sql');
 
-        const Movie_ID = utils.generateRandomID();
+        const movieId = utils.generateRandomID();
         const insertEvent = await pool.request()
                             .input('Movie_ID', sql.NVarChar, movieId)
                             .input('Title', sql.NVarChar, data.title)

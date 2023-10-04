@@ -12,7 +12,7 @@ const login = async (data) => {
         // Find user in database
         let existingUser = await pool
             .request()
-            .input("Email", sql.NVarChar, data.Email)
+            .input("Email", sql.NVarChar, data.email)
             .query(sqlQueries.login);
            
         existingUser = existingUser.recordset[0];
@@ -42,7 +42,7 @@ const login = async (data) => {
                 }
             );
             
-            existingUser.Token = token;
+            existingUser.token = token;
 
             // Return message
             return {
@@ -156,7 +156,7 @@ const rechargeBalance = async (data) => {
         return {
             message: "Recharged successfully",
             ...recharge.recordset[0],
-            TotalRecharge: data.recharge,
+            totalRecharge: data.recharge,
         };
     } catch (error) {
         return error.message;

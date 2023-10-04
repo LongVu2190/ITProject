@@ -76,8 +76,8 @@ const buyTickets = async (data) => {
         }
 
         const boughtUser = await users.reduceBalance({
-            Account_ID: data.accountId,
-            Cost: cost.Cost * data.seatNumber.length,
+            accountId: data.accountId,
+            cost: cost.Cost * data.seatNumber.length,
         });
 
         return {

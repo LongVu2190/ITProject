@@ -7,7 +7,7 @@ const addComment = async (data) => {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries('comment/sql');
 
-        const Comment_ID = utils.generateRandomID();
+        const commentId = utils.generateRandomID();
 
         const insertComment = await pool.request()
                             .input('Comment_ID', sql.NVarChar, commentId)
@@ -16,7 +16,7 @@ const addComment = async (data) => {
                             .input('Comment', sql.NVarChar, data.comment)
                             .query(sqlQueries.addComment);   
         
-        console.log('Added comment ID: ' + Comment_ID);                    
+        console.log('Added comment ID: ' + commentId);                    
         return insertComment.recordset;
     } catch (error) {
         return error;
