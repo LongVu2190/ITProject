@@ -45,11 +45,11 @@ const login = async (data) => {
             
             existingUser.token = token;
 
-            console.log(token);
             // Return message
             return {
                 message: "Login successfully",
-                ...existingUser,
+                accountId: existingUser.accountId,
+                token: existingUser.token,
             };
         } else {
             return {
@@ -92,6 +92,30 @@ const register = async (data) => {
                 message: "Account exist, please use another email or username"
             }
         } else return { message: error.message };
+    }
+};
+
+const getUser = async (data) => {
+    try {
+        let pool = await sql.connect(config.sql);
+        const sqlQueries = await utils.loadSqlQueries("user/sql");
+
+        const user = await pool
+            .request()
+            .input("accountId", sql.NVarChar, data.accountId)
+            .query(sqlQueries.getUser);
+
+        if (user.recordset[0] == null) {
+            return {
+                message: "Can not find this user"
+            };
+        }
+
+        return {
+            ...user.recordset[0]
+        };
+    } catch (error) {
+        return error.message
     }
 };
 
@@ -173,6 +197,7 @@ export default {
     login,
     register,
     getBalanceOfUser,
+    getUser,
     reduceBalance,
     rechargeBalance,
 };
