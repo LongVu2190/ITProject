@@ -26,7 +26,7 @@ const addMovie = async (data) => {
             ...insertMovie.recordset[0]
         }
     } catch (error) {
-        return error.message;
+        return { message: error.message }
     }
 }
 

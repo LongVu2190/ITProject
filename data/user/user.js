@@ -78,7 +78,7 @@ const register = async (data) => {
             .input("accountId", sql.NVarChar, accountId)
             .input("username", sql.NVarChar, data.username)
             .input("password", sql.NVarChar, hashPass)
-            .input("nickName", sql.NVarChar, data.nickName)
+            .input("nickname", sql.NVarChar, data.nickname)
             .input("email", sql.NVarChar, data.email)
             .query(sqlQueries.register);
 
@@ -88,10 +88,10 @@ const register = async (data) => {
         };
     } catch (error) {
         if (error.number == 2601) {
-            throw new Error (
-                "Account exist, please use another email or username"
-            );
-        } else return error.message;
+            return {
+                message: "Account exist, please use another email or username"
+            }
+        } else return { message: error.message };
     }
 };
 
@@ -107,7 +107,7 @@ const getBalanceOfUser = async (accountId) => {
 
         return user.recordset[0].balance;
     } catch (error) {
-        return error.message;
+        return { message: error.message }
     }
 };
 
@@ -130,7 +130,7 @@ const reduceBalance = async (data) => {
             totalCost: data.totalCost,
         };
     } catch (error) {
-        return error.message;
+        return { message: error.message }
     }
 };
 
@@ -165,7 +165,7 @@ const rechargeBalance = async (data) => {
             totalRecharge: data.recharge,
         };
     } catch (error) {
-        return error.message;
+        return { message: error.message }
     }
 };
 

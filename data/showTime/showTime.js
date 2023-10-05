@@ -24,7 +24,7 @@ const addShowTime = async (data) => {
             ...insertShowTime.recordset[0]
         }
     } catch (error) {
-        return error.message;
+        return { message: error.message }
     }
 }
 
@@ -42,7 +42,7 @@ const getComingShowTime = async() => {
         }
         return showTimes.recordset;
     } catch (error) {
-        return error.message;
+        return { message: error.message }
     }
 }
 
@@ -60,7 +60,7 @@ const getNowShowTime = async() => {
         }
         return showTimes.recordset;
     } catch (error) {
-        return error.message;
+        return { message: error.message }
     }
 }
 
@@ -78,7 +78,7 @@ const getSeatsOfShowTime = async (data) => {
 
         return showTimeSeats;
     } catch (error) {
-        return error.message;
+        return { message: error.message }
     }
 }
 
@@ -93,7 +93,7 @@ const getCostOfShowTime = async(showTimeId) => {
 
         return showTime.recordset[0].cost;
     } catch (error) {
-        return error.message;
+        return { message: error.message }
     }
 }
 
