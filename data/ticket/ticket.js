@@ -21,7 +21,7 @@ async function checkSeats(showTimeId, seatNumber, isSeated) {
             isSeated.value = true;
         }
     } catch (error) {
-        return error.message;
+        return { message: error.message }
     }
 }
 
@@ -42,7 +42,7 @@ async function addTicket(accountId, showTimeId, seatNumber) {
 
         console.log("Buy succesfully ticket: " + ticketId);
     } catch (error) {
-        return error;
+        return { message: error.message }
     }
 }
 
@@ -87,7 +87,7 @@ const buyTickets = async (data) => {
         };
 
     } catch (error) {
-        return error.message;
+        return { message: error.message }
     }
 };
 

@@ -22,7 +22,7 @@ const addComment = async (data) => {
             ...insertComment.recordset[0]
         }
     } catch (error) {
-        return error.message;
+        return { message: error.message }
     }
 }
 
@@ -41,7 +41,7 @@ const deleteComment = async (data) => {
             message: "Delete successfully",
         };
     } catch (error) {
-        return error.message;
+        return { message: error.message }
     }
 }
 
@@ -57,7 +57,7 @@ const getCommentByMovie = async(movieId) => {
         return comments.recordset;
 
     } catch (error) {
-        return error.message;
+        return { message: error.message }
     }
 }
 
