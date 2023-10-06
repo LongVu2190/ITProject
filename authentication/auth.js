@@ -5,9 +5,7 @@ export default function checkToken(req, res, next) {
     console.log("request url: " + req.url);
 
     if (req.url == '/user/login' || req.url == '/user/register' || 
-    req.url == '/showtime/coming' || req.url == '/showtime/now' ||
-    req.url == '/showtime/32e869oTz815Z0k2gEsH') {
-
+    req.url.indexOf('showtime') != -1 && req.url != '/showtime/add') {
         next();
         return;
     }
