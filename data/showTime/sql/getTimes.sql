@@ -1,4 +1,8 @@
 SELECT  st.showTimeId,
+        mv.movieId,
+        mv.title,
+        mv.genre,
+        mv.thumbnail,
 		st.showingDate,
         st.startTime,
         st.endTime
