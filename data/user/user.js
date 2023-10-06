@@ -95,14 +95,14 @@ const register = async (data) => {
     }
 }
 
-const getUser = async (data) => {
+const getUser = async (accountId) => {
     try {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries("user/sql");
 
         const user = await pool
             .request()
-            .input("accountId", sql.NVarChar, data.accountId)
+            .input("accountId", sql.NVarChar, accountId)
             .query(sqlQueries.getUser);
 
         if (user.recordset[0] == null) {

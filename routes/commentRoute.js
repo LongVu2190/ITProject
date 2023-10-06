@@ -4,6 +4,6 @@ const router = express.Router();
 
 router.post('/', commentController.addComment);
 router.delete('/', commentController.deleteComment);
-router.get('/', commentController.getCommentByMovie);
+router.get('/:movieId', commentController.getCommentByMovie);
 
 export default router

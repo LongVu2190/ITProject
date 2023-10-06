@@ -22,8 +22,8 @@ const deleteComment = async (req, res, next) => {
 
 const getCommentByMovie = async (req, res, next) => {
     try {
-        const data = req.body.movieId;
-        const response = await commentQueries.getCommentByMovie(data);
+        const movieId = req.params.movieId;
+        const response = await commentQueries.getCommentByMovie(movieId);
         res.send(response);
     } catch (error) {
         res.status(400).send(error.message);

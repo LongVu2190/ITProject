@@ -24,8 +24,8 @@ const register = async (req, res, next) => {
 
 const getUser = async (req, res, next) => {
     try {
-        const data = req.body;
-        const response = await userQueries.getUser(data);
+        const accountId = req.params.accountId;
+        const response = await userQueries.getUser(accountId);
         
         res.send(response);
     } catch (error) {

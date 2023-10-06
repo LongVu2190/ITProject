@@ -33,9 +33,9 @@ const getNowShowTime = async (req, res, next) => {
 
 const getSeatsOfShowTime = async (req, res, next) => {
     try {
-        const data = req.body;
+        const showTimeId = req.params.showTimeId;
 
-        const response = await showTimeQueries.getSeatsOfShowTime(data);
+        const response = await showTimeQueries.getSeatsOfShowTime(showTimeId);
         
         res.send(response);
     } catch (error) {

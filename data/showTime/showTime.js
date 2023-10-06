@@ -79,13 +79,13 @@ const getTimes = async(data) => {
     }
 }
 
-const getSeatsOfShowTime = async (data) => {
+const getSeatsOfShowTime = async (showTimeId) => {
     try {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries("showTime/sql");
         const seats = await pool
             .request()
-            .input("showTimeId", sql.NVarChar, data.showTimeId)
+            .input("showTimeId", sql.NVarChar, showTimeId)
             .query(sqlQueries.getSeatsOfShowTime);
 
         const showTimeSeats = seats.recordset.map(item => item.seatNumber);
