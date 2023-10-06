@@ -83,7 +83,6 @@ const getSeatsOfShowTime = async (data) => {
     try {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries("showTime/sql");
-
         const seats = await pool
             .request()
             .input("showTimeId", sql.NVarChar, data.showTimeId)
