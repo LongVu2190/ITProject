@@ -59,7 +59,7 @@ const login = async (data) => {
     } catch (error) {
         return error.message;
     }
-};
+}
 
 const register = async (data) => {
     try {
@@ -93,7 +93,7 @@ const register = async (data) => {
             }
         } else return { message: error.message };
     }
-};
+}
 
 const getUser = async (data) => {
     try {
@@ -117,7 +117,7 @@ const getUser = async (data) => {
     } catch (error) {
         return error.message
     }
-};
+}
 
 const getBalanceOfUser = async (accountId) => {
     try {
@@ -133,7 +133,7 @@ const getBalanceOfUser = async (accountId) => {
     } catch (error) {
         return { message: error.message }
     }
-};
+}
 
 const reduceBalance = async (data) => {
     try {
@@ -156,7 +156,7 @@ const reduceBalance = async (data) => {
     } catch (error) {
         return { message: error.message }
     }
-};
+}
 
 const rechargeBalance = async (data) => {
     try {
@@ -191,7 +191,7 @@ const rechargeBalance = async (data) => {
     } catch (error) {
         return { message: error.message }
     }
-};
+}
 
 export default {
     login,
@@ -200,4 +200,4 @@ export default {
     getUser,
     reduceBalance,
     rechargeBalance,
-};
+}

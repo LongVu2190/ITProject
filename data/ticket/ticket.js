@@ -89,8 +89,8 @@ const buyTickets = async (data) => {
     } catch (error) {
         return { message: error.message }
     }
-};
+}
 
 export default {
     buyTickets
-};
+}
