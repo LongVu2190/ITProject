@@ -35,6 +35,7 @@ const getSeatsOfShowTime = async (req, res, next) => {
     try {
         console.log(req);
         const data = req.body;
+        console.log(data)
         const response = await showTimeQueries.getSeatsOfShowTime(data);
         
         res.send(response);
