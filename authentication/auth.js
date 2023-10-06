@@ -5,7 +5,7 @@ export default function checkToken(req, res, next) {
     console.log("request url: " + req.url);
 
     if (req.url == '/user/login' || req.url == '/user/register' || 
-    req.url.indexOf('showtime') != -1 && req.url != '/showtime/add') {
+    req.url.indexOf('showtime') != -1 && req.url != '/showtime/add' || req.url.indexOf('/public/assets') != -1) {
         next();
         return;
     }
