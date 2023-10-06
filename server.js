@@ -11,9 +11,7 @@ app.use(cors())
 app.use(cors(corsOptions));
 app.all('*', corsOptions.setting)
 
-
-
-app.use(checkToken); // shield, guard
+app.use(checkToken);
 app.use(bodyParser.json());
 
 app.use('/movie/', movieRouter);
@@ -21,7 +19,6 @@ app.use('/user/', userRouter);
 app.use('/showtime/', showTimeRouter);
 app.use('/ticket/', ticketRouter);
 app.use('/comment/', commentRouter);
-
 
 const PORT = config.port ?? 3000
 
