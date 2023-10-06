@@ -42,9 +42,33 @@ const getSeatsOfShowTime = async (req, res, next) => {
     }
 }
 
+const getTimeOfNow = async (req, res, next) => {
+    try {
+        const data = req.params;
+        const response = await showTimeQueries.getTimeOfNow(data);
+        
+        res.send(response);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+const getTimeOfComing = async (req, res, next) => {
+    try {
+        const data = req.params;
+        const response = await showTimeQueries.getTimeOfComing(data);
+        
+        res.send(response);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
 export default {
     addShowTime,
     getComingShowTime,
     getNowShowTime,
-    getSeatsOfShowTime
+    getSeatsOfShowTime,
+    getTimeOfNow,
+    getTimeOfComing
 }

@@ -64,10 +64,40 @@ const getNowShowTime = async() => {
     }
 }
 
+const getTimeOfNow = async(data) => {
+    try {
+        let pool = await sql.connect(config.sql);
+        const sqlQueries = await utils.loadSqlQueries('showTime/sql');
+
+        const times = await pool.request()
+                                .input('movieId', sql.NVarChar, data.movieId)
+                                .query(sqlQueries.getTimeOfNow);
+
+        return times.recordset;
+    } catch (error) {
+        return { message: error.message }
+    }
+}
+
+const getTimeOfComing = async(data) => {
+    try {
+        let pool = await sql.connect(config.sql);
+        const sqlQueries = await utils.loadSqlQueries('showTime/sql');
+
+        const times = await pool.request()
+                                .input('movieId', sql.NVarChar, data.movieId)
+                                .query(sqlQueries.getTimeOfComing);
+
+        return times.recordset;
+    } catch (error) {
+        return { message: error.message }
+    }
+}
+
 const getSeatsOfShowTime = async (data) => {
     try {
         let pool = await sql.connect(config.sql);
-        const sqlQueries = await utils.loadSqlQueries("ticket/sql");
+        const sqlQueries = await utils.loadSqlQueries("showTime/sql");
 
         const seats = await pool
             .request()
@@ -102,5 +132,7 @@ export default {
     getNowShowTime,
     getComingShowTime,
     getCostOfShowTime,
-    getSeatsOfShowTime
+    getSeatsOfShowTime,
+    getTimeOfNow,
+    getTimeOfComing
 }
