@@ -3,7 +3,7 @@ SELECT 	DISTINCT
 		mv.title,
 		mv.cost,
 		mv.genre,
-		LTRIM(DATEDIFF(MINUTE, 0, mv.runTime)) as runTime,
+		CONVERT(VARCHAR, mv.runTime, 108) as runTime,
 		mv.thumbnail,
 		mv.region
 FROM [dbo].[ShowTime_List] st inner join [dbo].[Movie_List] mv on st.movieId = mv.movieId
