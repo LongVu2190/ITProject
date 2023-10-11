@@ -1,8 +1,5 @@
 SELECT  st.showTimeId,
         mv.movieId,
-        mv.title,
-        mv.genre,
-        mv.thumbnail,
 		CONVERT(VARCHAR, st.showingDate, 23) AS showingDate,
         CONVERT(VARCHAR, st.startTime, 108) AS startTime,
         CONVERT(VARCHAR, st.endTime, 108) AS endTime
