@@ -24,7 +24,11 @@ const addShowTime = async (data) => {
             ...insertShowTime.recordset[0]
         }
     } catch (error) {
-        return { message: error.message }
+        if (error.number == 2601) {
+            return {
+                message: "Showtime with this movieId already exist in this DateTime"
+            }
+        } else return { message: error.message };
     }
 }
 

@@ -8,3 +8,4 @@ SELECT 	DISTINCT
 		mv.region
 FROM [dbo].[ShowTime_List] st inner join [dbo].[Movie_List] mv on st.movieId = mv.movieId
 WHERE st.[showingDate] >= CAST( GETDATE() AS Date )
+AND st.[startTime] >= CONVERT(TIME, GETDATE())
