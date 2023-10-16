@@ -4,7 +4,7 @@ export default function checkToken(req, res, next) {
     // bypass login, register
     console.log("request url: " + req.url);
 
-    if (req.url == '/user/login' || req.url == '/user/register' || 
+    if (req.url == '/user/login' || req.url == '/user/register' || req.url == '/ticket' ||
     req.url.indexOf('/public/assets') != -1 || req.url.indexOf('showtime') != -1 && req.url != '/showtime/add' ) {
         next();
         return;
