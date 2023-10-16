@@ -15,13 +15,13 @@ const login = async (data) => {
             .request()
             .input("email", sql.NVarChar, data.email)
             .query(sqlQueries.login);
-           
+
         existingUser = existingUser.recordset[0];
 
         // Check if exist
         if (existingUser == null) {
             return {
-                message: 'Wrong email or password'
+                message: "Wrong email or password",
             };
         }
 
@@ -39,10 +39,10 @@ const login = async (data) => {
                 },
                 process.env.JWT_SECRET,
                 {
-                    expiresIn: '1 day',
+                    expiresIn: "1 day",
                 }
             );
-            
+
             existingUser.token = token;
 
             // Return message
@@ -53,13 +53,13 @@ const login = async (data) => {
             };
         } else {
             return {
-                message: 'Wrong email or password',
+                message: "Wrong email or password",
             };
         }
     } catch (error) {
         return error.message;
     }
-}
+};
 
 const register = async (data) => {
     try {
@@ -89,11 +89,11 @@ const register = async (data) => {
     } catch (error) {
         if (error.number == 2601) {
             return {
-                message: "Account exist, please use another email or username"
-            }
+                message: "Account exist, please use another email or username",
+            };
         } else return { message: error.message };
     }
-}
+};
 
 const getUser = async (accountId) => {
     try {
@@ -107,17 +107,17 @@ const getUser = async (accountId) => {
 
         if (user.recordset[0] == null) {
             return {
-                message: "Can not find this user"
+                message: "Can not find this user",
             };
         }
 
         return {
-            ...user.recordset[0]
+            ...user.recordset[0],
         };
     } catch (error) {
-        return error.message
+        return error.message;
     }
-}
+};
 
 const getBalanceOfUser = async (accountId) => {
     try {
@@ -131,9 +131,9 @@ const getBalanceOfUser = async (accountId) => {
 
         return user.recordset[0].balance;
     } catch (error) {
-        return { message: error.message }
+        return { message: error.message };
     }
-}
+};
 
 const reduceBalance = async (data) => {
     try {
@@ -154,9 +154,9 @@ const reduceBalance = async (data) => {
             totalCost: data.totalCost,
         };
     } catch (error) {
-        return { message: error.message }
+        return { message: error.message };
     }
-}
+};
 
 const rechargeBalance = async (data) => {
     try {
@@ -189,9 +189,30 @@ const rechargeBalance = async (data) => {
             totalRecharge: data.recharge,
         };
     } catch (error) {
-        return { message: error.message }
+        return { message: error.message };
     }
-}
+};
+
+const getTicketsOfUser = async (accountId) => {
+    try {
+        let pool = await sql.connect(config.sql);
+        const sqlQueries = await utils.loadSqlQueries("user/sql");
+
+        const tickets = await pool
+            .request()
+            .input("accountId", sql.NVarChar, accountId)
+            .query(sqlQueries.getTicketsOfUser);
+
+        if (tickets.recordset == "") {
+            return {
+                message: "No ticket",
+            };
+        }
+        return tickets.recordset;
+    } catch (error) {
+        return { message: error.message };
+    }
+};
 
 export default {
     login,
@@ -200,4 +221,5 @@ export default {
     getUser,
     reduceBalance,
     rechargeBalance,
-}
+    getTicketsOfUser
+};

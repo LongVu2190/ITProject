@@ -44,9 +44,21 @@ const rechargeBalance = async (req, res, next) => {
     }
 }
 
+const getTicketsOfUser = async (req, res, next) => {
+    try {
+        const accountId = req.params.accountId;
+        const response = await userQueries.getTicketsOfUser(accountId);
+        
+        res.send(response);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
 export default {
     login,
     register,
     getUser,
     rechargeBalance,
+    getTicketsOfUser
 }
