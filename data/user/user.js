@@ -198,7 +198,6 @@ const getTicketsOfUser = async (accountId) => {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries("user/sql");
 
-        console.log(accountId);
         const tickets = await pool
             .request()
             .input("accountId", sql.NVarChar, accountId)
