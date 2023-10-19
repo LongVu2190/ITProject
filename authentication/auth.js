@@ -18,14 +18,16 @@ export default function checkToken(req, res, next) {
     const accessToken = req.headers?.authorization?.split(" ")[1];
 
     try {
-        const jwtObject = jwt.verify(accessToken, process.env.JWT_SECRET);
+        const jwtObject = jwt.decode(accessToken, process.env.JWT_SECRET);
         const isExpired = Date.now() >= jwtObject.exp * 1000;
 
+        console.log(jwtObject);
+        console.log(isExpired);
+
         if (isExpired) {
-            res.end();
-            return {
-                message: "Token is expired"
-            }
+            res.status(401).send({
+                message: "Fobidden"
+            })
         }
         else {
             next();
