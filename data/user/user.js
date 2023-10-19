@@ -32,24 +32,28 @@ const login = async (data) => {
         );
 
         if (isMatch) {
+            delete existingUser.password;
             // Create JWS
-            let token = jwt.sign(
-                {
-                    data: existingUser,
-                },
+            const accessToken = jwt.sign(
+                { data: existingUser },
                 process.env.JWT_SECRET,
-                {
-                    expiresIn: "1 day",
-                }
+                { expiresIn: "20s" }
+            );
+            const refreshToken = jwt.sign(
+                { data: existingUser },
+                process.env.REFRESH_JWT_SECRET,
+                { expiresIn: "7d" }
             );
 
-            existingUser.token = token;
+            existingUser.accessToken = accessToken;
+            existingUser.refreshToken = refreshToken;
 
             // Return message
             return {
                 message: "Login successfully",
                 accountId: existingUser.accountId,
-                token: existingUser.token,
+                accessToken: existingUser.accessToken,
+                refreshToken: existingUser.refreshToken,
             };
         } else {
             return {
@@ -212,5 +216,5 @@ export default {
     getUser,
     reduceBalance,
     rechargeBalance,
-    getTicketsOfUser
+    getTicketsOfUser,
 };
