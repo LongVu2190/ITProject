@@ -1,5 +1,6 @@
 import express from 'express';
 import { config, corsOptions } from './config/index.js';
+import credentials from './middleware/credentials.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
@@ -14,11 +15,12 @@ import { movieRouter, userRouter, showTimeRouter, ticketRouter, commentRouter, r
 const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-app.use(express.json());
-app.use(cookieParser());
-app.use(cors())
+app.use(credentials)
 app.use(cors(corsOptions));
-app.all('*', corsOptions.setting)
+app.use(express.json());
+app.use(cookieParser());    
+
+
 
 app.use(checkToken);
 app.use(bodyParser.json());
@@ -43,6 +45,19 @@ app.use('/showtime/', showTimeRouter);
 app.use('/ticket/', ticketRouter);
 app.use('/comment/', commentRouter);
 app.use('/refresh/', refreshRouter);
+
+
+app.all('*', (req, res) => {
+    res.status(404);
+    if (req.accepts('html')) {
+        res.sendFile(path.join(__dirname, 'views', '404.html'));
+    } else if (req.accepts('json')) {
+        res.json({ "error": "404 Not Found" });
+    } else {
+        res.type('txt').send("404 Not Found");
+    }
+});
+
 
 const PORT = config.port ?? 3000
 

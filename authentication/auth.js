@@ -5,11 +5,9 @@ export default function checkToken(req, res, next) {
   console.log("request url: " + req.url);
 
   if (
+    req.url == "/refresh" ||
     req.url == "/user/login" ||
     req.url == "/user/register" ||
-    req.url == "/ticket" ||
-    req.url == "/user/w2TeJ496XDI07tI412D2" ||
-    req.url == "/user/w2TeJ496XDI07tI412D2/balance" ||
     req.url.indexOf("/public/assets") != -1 ||
     (req.url.indexOf("showtime") != -1 && req.url != "/showtime/add")
   ) {
@@ -28,7 +26,7 @@ export default function checkToken(req, res, next) {
 
     if (isExpired) {
       res.status(401).send({
-        message: "Fobidden",
+        message: "Forbidden",
       });
     } else {
       next();
