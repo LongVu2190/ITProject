@@ -4,7 +4,7 @@ import sql from "mssql";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const login = async (data) => {
+const login = async (data, res) => {
     try {
         let pool = await sql.connect(config.sql);
 
@@ -48,6 +48,15 @@ const login = async (data) => {
             existingUser.accessToken = accessToken;
             existingUser.refreshToken = refreshToken;
 
+            await pool
+                .request()
+                .input("accountId", sql.NVarChar, existingUser.accountId)
+                .input("refreshToken", sql.NVarChar, existingUser.refreshToken)
+                .query(sqlQueries.updateRefreshToken);
+
+            // add refresh token to cookie
+            res.cookie('jwt', existingUser.refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000});
+            
             // Return message
             return {
                 message: "Login successfully",
