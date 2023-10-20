@@ -27,7 +27,6 @@ const checkRefreshToken = async (refreshToken) => {
             .input("refreshToken", sql.NVarChar, refreshToken)
             .query(sqlQueries.getUserRefreshToken);
 
-        console.log(foundUser);
         if (foundUser.recordset[0] == null) {
             return false;
         }
@@ -50,12 +49,9 @@ const handleRefreshToken = async (req, res, next) => {
         return res.status(403).send("Forbidden");
     }
 
-    console.log("Pass Forbidden");
-
     const jwtObject = jwt.decode(refreshToken, process.env.REFRESH_JWT_SECRET);
     const isExpired = Date.now() >= jwtObject.exp * 1000;
 
-    console.log("IsExpired: " + isExpired);
     if (!isExpired) {
         if (foundUser.username != jwtObject.data.username) {
             return res.status(401);
