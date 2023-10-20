@@ -58,19 +58,19 @@ export default function checkToken(req, res, next) {
   //         // Access token has expired. Check for a refresh token.
   //         const refreshToken = req.headers?.authorization?.split(" ")[2];
 
-  //         if (!refreshToken) {
-  //             res.status(401).json({
-  //                 message:
-  //                     "Access token is expired, and no refresh token provided.",
-  //             });
-  //             return;
-  //         }
+    //         if (!refreshToken) {
+    //             res.status(401).json({
+    //                 message:
+    //                     "Access token is expired, and no refresh token provided.",
+    //             });
+    //             return;
+    //         }
 
-  //         // Check if the refresh token is valid
-  //         const refreshJwtObject = jwt.verify(
-  //             refreshToken,
-  //             process.env.REFRESH_JWT_SECRET
-  //         );
+    //         // Check if the refresh token is valid
+    //         const refreshJwtObject = jwt.verify(
+    //             refreshToken,
+    //             process.env.REFRESH_JWT_SECRET
+    //         );
 
   //         // Issue a new access token
   //         const newAccessToken = jwt.sign(user, process.env.JWT_SECRET, {
