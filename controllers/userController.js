@@ -3,7 +3,7 @@ import { userQueries } from '../data/index.js'
 const login = async (req, res, next) => {
     try {
         const data = req.body;
-        const response = await userQueries.login(data);
+        const response = await userQueries.login(data, res);
 
         res.send(response);
     } catch (error) {

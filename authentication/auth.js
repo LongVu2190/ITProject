@@ -8,6 +8,7 @@ export default function checkToken(req, res, next) {
         req.url == "/user/login" ||
         req.url == "/user/register" ||
         req.url == "/ticket" ||
+        req.url == "/refresh" ||
         req.url.indexOf("/public/assets") != -1 ||
         (req.url.indexOf("showtime") != -1 && req.url != "/showtime/add")
     ) {
@@ -21,12 +22,11 @@ export default function checkToken(req, res, next) {
         const jwtObject = jwt.decode(accessToken, process.env.JWT_SECRET);
         const isExpired = Date.now() >= jwtObject.exp * 1000;
 
-        console.log(jwtObject);
         console.log(isExpired);
 
         if (isExpired) {
             res.status(401).send({
-                message: "Fobidden"
+                message: "Forbidden"
             })
         }
         else {
