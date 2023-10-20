@@ -32,24 +32,28 @@ const login = async (data) => {
         );
 
         if (isMatch) {
+            delete existingUser.password;
             // Create JWS
-            let token = jwt.sign(
-                {
-                    data: existingUser,
-                },
+            const accessToken = jwt.sign(
+                { data: existingUser },
                 process.env.JWT_SECRET,
-                {
-                    expiresIn: "1 day",
-                }
+                { expiresIn: "20s" }
+            );
+            const refreshToken = jwt.sign(
+                { data: existingUser },
+                process.env.REFRESH_JWT_SECRET,
+                { expiresIn: "7d" }
             );
 
-            existingUser.token = token;
+            existingUser.accessToken = accessToken;
+            existingUser.refreshToken = refreshToken;
 
             // Return message
             return {
                 message: "Login successfully",
                 accountId: existingUser.accountId,
-                token: existingUser.token,
+                accessToken: existingUser.accessToken,
+                refreshToken: existingUser.refreshToken,
             };
         } else {
             return {
@@ -158,16 +162,13 @@ const reduceBalance = async (data) => {
     }
 };
 
-const rechargeBalance = async (data) => {
+const rechargeBalance = async (data, accountId) => {
     try {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries("user/sql");
-
-        console.log(data);
-
         const recharge = await pool
             .request()
-            .input("accountId", sql.NVarChar, data.accountId)
+            .input("accountId", sql.NVarChar, accountId)
             .input("recharge", sql.Int, data.recharge)
             .query(sqlQueries.rechargeBalance);
 
@@ -176,12 +177,6 @@ const rechargeBalance = async (data) => {
                 message: "Account does not exist",
             };
         }
-        console.log(
-            "Recharged balance of user: " +
-                data.accountId +
-                " + " +
-                data.recharge
-        );
 
         return {
             message: "Recharged successfully",
@@ -221,5 +216,5 @@ export default {
     getUser,
     reduceBalance,
     rechargeBalance,
-    getTicketsOfUser
+    getTicketsOfUser,
 };

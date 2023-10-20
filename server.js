@@ -7,7 +7,6 @@ import path, { dirname } from 'path'
 import multer from 'multer';
 import { fileURLToPath } from 'url';
 
-
 import checkToken from './authentication/auth.js';
 import { movieRouter, userRouter, showTimeRouter, ticketRouter, commentRouter } from './routes/index.js';
 
@@ -34,7 +33,6 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({ storage })
-
 
 app.use('/movie/', movieRouter);
 app.use('/user/', userRouter);
