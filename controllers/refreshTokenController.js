@@ -44,7 +44,6 @@ const handleRefreshToken = async (req, res, next) => {
     const refreshToken = cookies.jwt;
 
     const foundUser = await checkRefreshToken(refreshToken);
-
     if (!foundUser) {
         return res.status(403).send("Forbidden");
     }
@@ -56,6 +55,7 @@ const handleRefreshToken = async (req, res, next) => {
         if (foundUser.username != jwtObject.data.username) {
             return res.status(401);
         } else {
+            
             const accessToken = jwt.sign(
                 { data: foundUser },
                 process.env.JWT_SECRET,
@@ -71,7 +71,7 @@ const handleRefreshToken = async (req, res, next) => {
                 httpOnly: true,
                 maxAge: 24 * 60 * 60 * 1000,
             });
-            res.json({ accessToken });
+            res.json({ accountId: foundUser.accountId, accessToken });
         }
     } else {
         return res.status(403).send("Forbidden");

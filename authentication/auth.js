@@ -25,7 +25,7 @@ export default function checkToken(req, res, next) {
     console.log(isExpired);
 
     if (isExpired) {
-      res.status(401).send({
+      res.status(403).send({
         message: "Forbidden",
       });
     } else {
