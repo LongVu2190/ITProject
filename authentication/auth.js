@@ -8,8 +8,9 @@ export default function checkToken(req, res, next) {
     req.url == "/refresh" ||
     req.url == "/user/login" ||
     req.url == "/user/register" ||
+    req.url == "/movie" ||
     req.url.indexOf("/public/assets") != -1 ||
-    (req.url.indexOf("showtime") != -1 && req.url != "/showtime/add")
+    req.url.indexOf("showtime") != -1
   ) {
     next();
     return;
