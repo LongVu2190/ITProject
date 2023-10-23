@@ -11,12 +11,14 @@ import { fileURLToPath } from 'url';
 import checkToken from './authentication/auth.js';
 import cookieParser from 'cookie-parser';
 import { movieRouter, userRouter, showTimeRouter, ticketRouter, commentRouter, refreshRouter } from './routes/index.js';
+import { movieController } from './controllers/index.js'
 
 const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 app.use(credentials)
 app.use(cors(corsOptions));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());    
 
@@ -38,7 +40,7 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({ storage })
-
+app.post('/movie', upload.single('thumbnail'), movieController.addMovie)
 app.use('/movie/', movieRouter);
 app.use('/user/', userRouter);
 app.use('/showtime/', showTimeRouter);
