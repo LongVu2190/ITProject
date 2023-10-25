@@ -1,4 +1,5 @@
-SELECT  [username],
+SELECT  [accountId],
+        [username],
         [nickname],
         [email],
         [balance]
