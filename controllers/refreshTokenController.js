@@ -59,12 +59,12 @@ const handleRefreshToken = async (req, res, next) => {
             const accessToken = jwt.sign(
                 { data: foundUser },
                 process.env.JWT_SECRET,
-                { expiresIn: "10s" }
+                { expiresIn: "1d" }
             );
             const refreshToken = jwt.sign(
                 { data: foundUser },
                 process.env.REFRESH_JWT_SECRET,
-                { expiresIn: "1day" }
+                { expiresIn: "7d" }
             );
             await updateRefreshToken(foundUser.accountId, refreshToken);
             res.cookie("jwt", refreshToken, {

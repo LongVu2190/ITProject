@@ -11,6 +11,17 @@ const buyTickets = async (req, res, next) => {
     }
 }
 
+const getAllTicket = async (req, res, next) => {
+    try {
+        const response = await ticketQueries.getAllTicket();
+        
+        res.send(response);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
 export default {
-    buyTickets
+    buyTickets,
+    getAllTicket,
 }

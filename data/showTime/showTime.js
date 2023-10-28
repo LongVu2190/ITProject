@@ -68,6 +68,18 @@ const getNowShowTime = async() => {
     }
 }
 
+const getAllShowTime = async() => {
+    try {
+        let pool = await sql.connect(config.sql);
+
+        const showTimes = await pool.request().query('select * from ShowTime_List');
+
+        return showTimes.recordset;
+    } catch (error) {
+        return { message: error.message }
+    }
+}
+
 const getTimes = async(data) => {
     try {
         let pool = await sql.connect(config.sql);
@@ -119,6 +131,7 @@ export default {
     addShowTime,
     getNowShowTime,
     getComingShowTime,
+    getAllShowTime,
     getCostOfShowTime,
     getSeatsOfShowTime,
     getTimes

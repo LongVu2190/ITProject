@@ -33,6 +33,16 @@ const getUser = async (req, res, next) => {
     }
 }
 
+const getAllUser = async (req, res, next) => {
+    try {
+        const response = await userQueries.getAllUser();
+        
+        res.send(response);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
 const rechargeBalance = async (req, res, next) => {
     try {
         const data = req.body;
@@ -61,5 +71,6 @@ export default {
     register,
     getUser,
     rechargeBalance,
-    getTicketsOfUser
+    getTicketsOfUser,
+    getAllUser
 }

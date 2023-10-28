@@ -91,6 +91,22 @@ const buyTickets = async (data) => {
     }
 }
 
+const getAllTicket = async () => {
+    try {
+        let pool = await sql.connect(config.sql);
+
+        const tickets = await pool
+            .request()
+            .query('select * from Ticket_List');
+
+        return {
+            ...tickets.recordset,
+        };
+    } catch (error) {
+        return error.message;
+    }
+};
 export default {
-    buyTickets
+    buyTickets,
+    getAllTicket
 }

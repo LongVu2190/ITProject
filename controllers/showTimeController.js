@@ -31,6 +31,16 @@ const getNowShowTime = async (req, res, next) => {
     }
 }
 
+const getAllShowTime = async (req, res, next) => {
+    try {
+        const response = await showTimeQueries.getAllShowTime();
+        
+        res.send(response);
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+  }
+
 const getSeatsOfShowTime = async (req, res, next) => {
     try {
         const showTimeId = req.params.showTimeId;
@@ -58,6 +68,7 @@ export default {
     addShowTime,
     getComingShowTime,
     getNowShowTime,
+    getAllShowTime,
     getSeatsOfShowTime,
     getTimes
 }
