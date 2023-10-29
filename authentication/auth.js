@@ -7,6 +7,7 @@ export default function checkToken(req, res, next) {
     if (
         req.url == "/refresh" ||
         req.url == "/user/login" ||
+        req.url == "/user/logout" ||
         req.url == "/user/register" ||
         req.url == "/movie" ||
         req.url.indexOf("/public/assets") != -1 ||
@@ -17,6 +18,15 @@ export default function checkToken(req, res, next) {
     }
 
     const accessToken = req.headers?.authorization?.split(" ")[1];
+
+    // if (req.url != "/user/login") {
+    //     const cookies = req.cookies;
+    //     if (!cookies?.jwt) {
+    //         res.status(403).send({
+    //             message: "Forbidden",
+    //         });
+    //     }
+    // }
 
     try {
         const jwtObject = jwt.decode(accessToken, process.env.JWT_SECRET);

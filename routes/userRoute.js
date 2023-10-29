@@ -3,6 +3,7 @@ import {userController} from '../controllers/index.js'
 const router = express.Router();
 
 router.post('/login', userController.login);
+router.post('/logout/', userController.logout);
 router.post('/register', userController.register);
 router.get('/all', userController.getAllUser);
 router.get('/:accountId', userController.getUser);
