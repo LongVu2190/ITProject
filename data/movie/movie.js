@@ -38,9 +38,7 @@ const getAllMovie = async () => {
             .request()
             .query('select * from Movie_List');
 
-        return {
-            ...movies.recordset,
-        };
+        return movies.recordset;
     } catch (error) {
         return error.message;
     }
