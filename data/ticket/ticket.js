@@ -99,9 +99,7 @@ const getAllTicket = async () => {
             .request()
             .query('select * from Ticket_List');
 
-        return {
-            ...tickets.recordset,
-        };
+        return tickets.recordset;
     } catch (error) {
         return error.message;
     }
