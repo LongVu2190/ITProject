@@ -1,8 +1,9 @@
 import { userQueries } from "../data/index.js";
 
 const login = async (req, res, next) => {
-    try {
+    try {       
         const data = req.body;
+        console.log(req.body)
         const response = await userQueries.login(data, res);
 
         res.send(response);
