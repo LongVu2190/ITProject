@@ -146,9 +146,7 @@ const getAllUser = async () => {
             .request()
             .query('select accountId, username, nickname, email, balance from User_Account');
 
-        return {
-            ...users.recordset,
-        };
+        return users.recordset
     } catch (error) {
         return error.message;
     }
