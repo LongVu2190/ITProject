@@ -3,7 +3,7 @@ INSERT INTO [dbo].[User_Account]
         [accountId],
         [username],
         [password],
-		[nickName],
+		[nickname],
         [email],
 		[balance]
     )
@@ -12,7 +12,7 @@ VALUES
         @accountId,
         @username,
         @password,
-		@nickName,
+		@nickname,
         @email,
 		0
     )
