@@ -3,5 +3,5 @@ select  movieId,
         cost,
         genre,
         region,
-        CONVERT(VARCHAR, runTime, 108) AS endTime
+        CONVERT(VARCHAR, runTime, 108) AS runTime
 from Movie_List
