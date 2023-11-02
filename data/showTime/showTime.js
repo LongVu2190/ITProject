@@ -15,9 +15,7 @@ const addShowTime = async (data) => {
                             .input('movieId', sql.NVarChar, data.movieId)
                             .input('showingDate', sql.NVarChar, data.showingDate)
                             .input('startTime', sql.NVarChar, data.startTime)
-                            .query(sqlQueries.addShowTime);   
-       
-        console.log("Added showtime: " + insertShowTime.recordset[0]);
+                            .query(sqlQueries.addShowTime);
 
         return {
             message: "Add showtime successfully",

@@ -146,7 +146,7 @@ const getAllUser = async () => {
             .request()
             .query('select accountId, username, nickname, email, balance from User_Account');
 
-        return users.recordset
+        return users.recordset;
     } catch (error) {
         return error.message;
     }
@@ -191,14 +191,14 @@ const reduceBalance = async (data) => {
     }
 };
 
-const rechargeBalance = async (data, accountId) => {
+const rechargeBalance = async (amount, accountId) => {
     try {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries("user/sql");
         const recharge = await pool
             .request()
             .input("accountId", sql.NVarChar, accountId)
-            .input("recharge", sql.Int, data.recharge)
+            .input("recharge", sql.Int, amount)
             .query(sqlQueries.rechargeBalance);
 
         if (recharge.recordset[0] == null) {
@@ -206,11 +206,11 @@ const rechargeBalance = async (data, accountId) => {
                 message: "Account does not exist",
             };
         }
-
+        
         return {
             message: "Recharged successfully",
             ...recharge.recordset[0],
-            totalRecharge: data.recharge,
+            totalRecharge: amount,
         };
     } catch (error) {
         return { message: error.message };

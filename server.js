@@ -10,7 +10,7 @@ import { fileURLToPath } from 'url';
 
 import checkToken from './authentication/auth.js';
 import cookieParser from 'cookie-parser';
-import { movieRouter, userRouter, showTimeRouter, ticketRouter, commentRouter, refreshRouter } from './routes/index.js';
+import { movieRouter, userRouter, showTimeRouter, ticketRouter, refreshRouter } from './routes/index.js';
 import { movieController } from './controllers/index.js'
 
 const app = express();
@@ -21,8 +21,6 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());    
-
-
 
 app.use(checkToken);
 app.use(bodyParser.json());
@@ -45,7 +43,6 @@ app.use('/movie/', movieRouter);
 app.use('/user/', userRouter);
 app.use('/showtime/', showTimeRouter);
 app.use('/ticket/', ticketRouter);
-app.use('/comment/', commentRouter);
 app.use('/refresh/', refreshRouter);
 
 

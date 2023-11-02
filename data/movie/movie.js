@@ -19,8 +19,6 @@ const addMovie = async (data) => {
                             .input('thumbnail', sql.NVarChar, data.thumbnail)
                             .query(sqlQueries.addMovie);   
                        
-        console.log("Added movie: " + insertMovie.recordset[0]);
-
         return {
             message: "Add movie successfuly",
             ...insertMovie.recordset[0]
