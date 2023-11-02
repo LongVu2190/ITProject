@@ -31,8 +31,9 @@ const addMovie = async (data) => {
 const getAllMovie = async () => {
     try {
         let pool = await sql.connect(config.sql);
+        const sqlQueries = await utils.loadSqlQueries('movie/sql');
 
-        const movies = await pool.request().query('select * from Movie_List');
+        const movies = await pool.request().query(sqlQueries.getAllMovie);
 
         return movies.recordset;
     } catch (error) {

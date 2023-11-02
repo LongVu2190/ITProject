@@ -69,8 +69,9 @@ const getNowShowTime = async() => {
 const getAllShowTime = async() => {
     try {
         let pool = await sql.connect(config.sql);
+        const sqlQueries = await utils.loadSqlQueries('showTime/sql');
 
-        const showTimes = await pool.request().query('select * from ShowTime_List');
+        const showTimes = await pool.request().query(sqlQueries.getAllShowTime);
 
         return showTimes.recordset;
     } catch (error) {
