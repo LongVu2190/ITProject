@@ -22,8 +22,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());    
 
-
-
 app.use(checkToken);
 app.use(bodyParser.json());
 
@@ -45,7 +43,6 @@ app.use('/movie/', movieRouter);
 app.use('/user/', userRouter);
 app.use('/showtime/', showTimeRouter);
 app.use('/ticket/', ticketRouter);
-app.use('/comment/', commentRouter);
 app.use('/refresh/', refreshRouter);
 
 

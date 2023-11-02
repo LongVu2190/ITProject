@@ -58,9 +58,9 @@ const getAllUser = async (req, res, next) => {
 
 const rechargeBalance = async (req, res, next) => {
     try {
-        const data = req.body;
+        const recharge = req.body.recharge;
         const accountId = req.params.accountId;
-        const response = await userQueries.rechargeBalance(data, accountId);
+        const response = await userQueries.rechargeBalance(recharge, accountId);
 
         res.send(response);
     } catch (error) {

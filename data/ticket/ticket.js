@@ -91,6 +91,34 @@ const buyTickets = async (data) => {
     }
 }
 
+const deleteTicket = async (data) => {
+    try {
+        const accountId = data.accountId;
+        const ticketId = data.ticketId;
+
+        // Check if seats are available
+        let pool = await sql.connect(config.sql);
+        const sqlQueries = await utils.loadSqlQueries("ticket/sql");
+
+        const movieCost = await pool
+            .request()
+            .input("ticketId", sql.NVarChar, ticketId)
+            .query(sqlQueries.deleteTicket);
+
+        if (movieCost.recordset[0] == null) {
+            return {
+                message: `No ticketId: ${ticketId}`
+            }
+        }
+        console.log("Delete succesfully ticket: " + ticketId);
+
+        return await users.rechargeBalance(movieCost.recordset[0].cost, accountId);
+
+    } catch (error) {
+        return { message: error.message }
+    }
+}
+
 const getAllTicket = async () => {
     try {
         let pool = await sql.connect(config.sql);
@@ -106,5 +134,6 @@ const getAllTicket = async () => {
 };
 export default {
     buyTickets,
+    deleteTicket,
     getAllTicket
 }
