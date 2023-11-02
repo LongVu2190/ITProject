@@ -9,7 +9,9 @@ export default function checkToken(req, res, next) {
         req.url == "/user/login" ||
         req.url == "/user/logout" ||
         req.url == "/user/register" ||
-        req.url == "/movie" ||
+        req.url == "/movie/all" ||
+        req.url == "/ticket/all" ||
+        req.url == "/user/all" ||
         req.url.indexOf("/public/assets") != -1 ||
         req.url.indexOf("showtime") != -1
     ) {
