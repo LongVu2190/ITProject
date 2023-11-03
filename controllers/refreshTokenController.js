@@ -14,7 +14,7 @@ const updateRefreshToken = async (accountId, refreshToken) => {
             .input("refreshToken", sql.NVarChar, refreshToken)
             .query(sqlQueries.updateRefreshToken);
     } catch (error) {
-        console.log(error.message);
+        res.status(400).send(error.message);
     }
 };
 
@@ -34,7 +34,7 @@ const checkRefreshToken = async (refreshToken) => {
             ...foundUser.recordset[0],
         };
     } catch (error) {
-        console.log(error.message);
+        res.status(400).send(error.message);
     }
 };
 

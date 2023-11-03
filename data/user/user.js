@@ -173,15 +173,11 @@ const reduceBalance = async (data) => {
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries("user/sql");
 
-        // console.log(data);
         await pool
             .request()
             .input("accountId", sql.NVarChar, data.accountId)
             .input("totalCost", sql.Int, data.totalCost)
             .query(sqlQueries.reduceBalance);
-
-        // console.log("Updated balance of user: " + data.accountId);
-        // console.log("balance reduced: " + data.totalCost);
 
         return {
             totalCost: data.totalCost,

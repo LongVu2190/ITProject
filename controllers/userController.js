@@ -4,7 +4,6 @@ import refreshTokenController from "./refreshTokenController.js";
 const login = async (req, res, next) => {
     try {
         const data = req.body;
-        // console.log(req.body);
         const response = await userQueries.login(data, res);
 
         res.send(response);
@@ -15,7 +14,6 @@ const login = async (req, res, next) => {
 
 const logout = async (req, res, next) => {
     const cookies = req.cookies;
-    console.log(req.cookies);
     if (!cookies?.jwt) return res.sendStatus(204); //No content
     const refreshToken = cookies.jwt;
     // Is refreshToken in db?
@@ -39,7 +37,6 @@ const logout = async (req, res, next) => {
     // Delete refreshToken in db
     foundUser.refreshToken = "";
     const result = await foundUser.save();
-    console.log(result);
 
     res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
     res.clearCookie("accountId", {

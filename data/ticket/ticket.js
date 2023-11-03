@@ -41,8 +41,6 @@ async function addTicket(accountId, showTimeId, seatNumber) {
         .input("seatNumber", sql.Int, seatNumber)
         .input("purchaseDate", sql.NVarChar, currentDate)
         .query(sqlQueries.addTicket);
-
-    console.log("Buy succesfully ticket: " + ticketId);
 }
 
 const buyTickets = async (data) => {
