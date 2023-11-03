@@ -21,29 +21,28 @@ async function checkSeats(showTimeId, seatNumber, isSeated) {
             isSeated.value = true;
         }
     } catch (error) {
-        return { message: error.message }
+        return { message: error.message };
     }
 }
 
 async function addTicket(accountId, showTimeId, seatNumber) {
-    try {
-        let pool = await sql.connect(config.sql);
-        const sqlQueries = await utils.loadSqlQueries("ticket/sql");
+    let pool = await sql.connect(config.sql);
+    const sqlQueries = await utils.loadSqlQueries("ticket/sql");
 
-        const ticketId = utils.generateRandomID();
+    const ticketId = utils.generateRandomID();
 
-        await pool
-            .request()
-            .input("ticketId", sql.NVarChar, ticketId)
-            .input("accountId", sql.NVarChar, accountId)
-            .input("showTimeId", sql.NVarChar, showTimeId)
-            .input("seatNumber", sql.Int, seatNumber)
-            .query(sqlQueries.addTicket);
+    let currentDate = utils.getCurrentDate();
 
-        console.log("Buy succesfully ticket: " + ticketId);
-    } catch (error) {
-        return { message: error.message }
-    }
+    await pool
+        .request()
+        .input("ticketId", sql.NVarChar, ticketId)
+        .input("accountId", sql.NVarChar, accountId)
+        .input("showTimeId", sql.NVarChar, showTimeId)
+        .input("seatNumber", sql.Int, seatNumber)
+        .input("purchaseDate", sql.NVarChar, currentDate)
+        .query(sqlQueries.addTicket);
+
+    console.log("Buy succesfully ticket: " + ticketId);
 }
 
 const buyTickets = async (data) => {
@@ -83,49 +82,55 @@ const buyTickets = async (data) => {
 
         return {
             message: "Buy tickets successfully",
-            ...boughtUser
+            ...boughtUser,
         };
-
     } catch (error) {
-        return { message: error.message }
+        return { message: error.message };
     }
-}
+};
 
 const deleteTicket = async (data) => {
     try {
         const accountId = data.accountId;
         const ticketId = data.ticketId;
 
-        // Check if seats are available
         let pool = await sql.connect(config.sql);
         const sqlQueries = await utils.loadSqlQueries("ticket/sql");
 
-        const movieCost = await pool
+        // get ticket information
+        const ticketData = await pool
+            .request()
+            .input("ticketId", sql.NVarChar, ticketId)
+            .query(sqlQueries.getTicketInformation);
+
+        // if does not exist or showing date <= current date
+        if (ticketData.recordset[0] == null) {
+            return {
+                message: `Can not refund this ticket, you can only refund before the showing date`,
+            };
+        }
+
+        // delete ticket
+        await pool
             .request()
             .input("ticketId", sql.NVarChar, ticketId)
             .query(sqlQueries.deleteTicket);
 
-        if (movieCost.recordset[0] == null) {
-            return {
-                message: `No ticketId: ${ticketId}`
-            }
-        }
-        console.log("Delete succesfully ticket: " + ticketId);
-
-        return await users.rechargeBalance(movieCost.recordset[0].cost, accountId);
-
+        // refund for user
+        return await users.rechargeBalance(
+            ticketData.recordset[0].cost,
+            accountId
+        );
     } catch (error) {
-        return { message: error.message }
+        return { message: error.message };
     }
-}
+};
 
 const getAllTicket = async () => {
     try {
         let pool = await sql.connect(config.sql);
 
-        const tickets = await pool
-            .request()
-            .query('select * from Ticket_List');
+        const tickets = await pool.request().query("select * from Ticket_List");
 
         return tickets.recordset;
     } catch (error) {
@@ -135,5 +140,5 @@ const getAllTicket = async () => {
 export default {
     buyTickets,
     deleteTicket,
-    getAllTicket
-}
+    getAllTicket,
+};

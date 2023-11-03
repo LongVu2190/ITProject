@@ -3,14 +3,16 @@ INSERT INTO [dbo].[Ticket_List]
         [ticketId],
         [accountId],
         [showTimeId],
-		[seatNumber]
+		[seatNumber],
+        [purchaseDate]
     )
 VALUES 
     (
         @ticketId,
         @accountId,
         @showTimeId,
-		@seatNumber
+		@seatNumber,
+        @purchaseDate
     )
 
 SELECT  *
