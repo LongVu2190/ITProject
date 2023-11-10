@@ -89,6 +89,7 @@ const buyTickets = async (data) => {
 
 const deleteTicket = async (data) => {
     try {
+        // console.log(data)
         const accountId = data.accountId;
         const ticketId = data.ticketId;
 

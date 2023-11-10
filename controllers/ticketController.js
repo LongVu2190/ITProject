@@ -13,6 +13,7 @@ const buyTickets = async (req, res, next) => {
 
 const deleteTicket = async (req, res, next) => {
     try {
+        console.log(req.body)
         const data = req.body;
         const response = await ticketQueries.deleteTicket(data);
         
