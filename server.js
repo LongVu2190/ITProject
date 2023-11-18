@@ -62,7 +62,7 @@ app.all("*", (req, res) => {
     }
 });
 
-const PORT = config.port ?? 3000;
+const PORT = config.port ?? 5555;
 
 app.listen(PORT, async () => {
     console.log("Server is listening on PORT " + PORT);
