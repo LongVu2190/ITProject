@@ -7,7 +7,8 @@ SELECT 	tk.ticketId,
         CONVERT(VARCHAR, st.startTime, 108) AS startTime,
         CONVERT(VARCHAR, st.endTime, 108) AS endTime,
         CONVERT(VARCHAR, tk.purchaseDate, 23) AS purchaseDate,
-		tk.seatNumber				
+		tk.seatNumber,
+		mv.thumbnail
 FROM Ticket_List tk INNER JOIN ShowTime_List st ON tk.showTimeId = st.showTimeId
 			INNER JOIN Movie_List mv on st.movieId = mv.movieId
 WHERE accountId = @accountId
