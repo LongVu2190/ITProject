@@ -1,0 +1,789 @@
+{
+	"info": {
+		"_postman_id": "1fb96c84-75d0-4eb6-a374-9c18abb1736d",
+		"name": "cinema-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29807925"
+	},
+	"item": [
+		{
+			"name": "POST",
+			"item": [
+				{
+					"name": "addMovie",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImFjY291bnRJZCI6InQ1QzVudDc0NWF2OTlKTDlqMTR4IiwidXNlcm5hbWUiOiJsb25ndnUifSwiaWF0IjoxNjk4OTEzMTc0LCJleHAiOjE2OTg5OTk1NzR9.yu9qY7QMPJlAWsCtu4hIOWES737Q0XW-IePW_8rrR0k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"John Wick 3\",\r\n    \"cost\": \"8000\",\r\n    \"genre\": \"Hành động\",\r\n    \"region\": \"US\",\r\n    \"runTime\": \"2:00\",\r\n    \"thumbnail\": \"benphaxacsong.png\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5555/movie/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"movie",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addShowTime",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImFjY291bnRJZCI6IjUzRkE4M0FpNFFoazg2OW93MDJvIiwidXNlcm5hbWUiOiJsb25ndnUiLCJwYXNzd29yZCI6IiQyYiQxMCQxb2pzMzJIVFpIN3duZUt0YnV5ZlplS3lueXpuME9STDlzeWUvVVJLUmppZ01DbUlCQk9pTyIsIm5pY2tuYW1lIjoiSG_DoG5nIExvbmcgVsWpIiwiZW1haWwiOiJobHY5MTJAZ21haWwuY29tIiwiYmFsYW5jZSI6OTcwMDAwMH0sImlhdCI6MTY5NzA3NDM2MSwiZXhwIjoxNjk3MTYwNzYxfQ.eTd8TZ-lreIP8sv-pLwsEvZmTfW9zt1OBEC3PeovNHw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"movieId\": \"B5186x2rer3cgE4133QB\",\r\n\t\"showingDate\": \"12-22-2023\",\r\n    \"startTime\": \"14:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5555/showtime/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"showtime",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buyTickets",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImFjY291bnRJZCI6InQ1QzVudDc0NWF2OTlKTDlqMTR4IiwidXNlcm5hbWUiOiJsb25ndnUifSwiaWF0IjoxNjk4OTk1MzEyLCJleHAiOjE2OTkwODE3MTJ9.26RN3l7AhGaCWYhGK-nuENai1zgYRuUXFc_jTKV_aRo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountId\": \"t5C5nt745av99JL9j14x\",\r\n    \"showTimeId\": \"0d8PT6GB11U91488WyoX\",\r\n    \"seatNumbers\": [\"1\", \"2\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5555/ticket/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"ticket",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"hlv912@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5555/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"giadat\",\r\n    \"password\": \"123456\",\r\n    \"nickname\": \"Châu Hoàng Gia Đạt\",\r\n    \"email\": \"chgdat@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5555/user/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GET",
+			"item": [
+				{
+					"name": "logout",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImFjY291bnRJZCI6IjUzRkE4M0FpNFFoazg2OW93MDJvIiwidXNlcm5hbWUiOiJsb25ndnUifSwiaWF0IjoxNjk4NTgzMDIyLCJleHAiOjE2OTg2Njk0MjJ9.A4wpXbh7phSe71oHhaNpAAZdnEjTH6xYPG0WEZniqX4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"hlv912@gmail.com\",\r\n    \"password\": \"KhongCoPass\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5555/user/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"user",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refreshToken",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5555/refresh",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTicketsOfUser",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImFjY291bnRJZCI6InQ1QzVudDc0NWF2OTlKTDlqMTR4IiwidXNlcm5hbWUiOiJsb25ndnUifSwiaWF0IjoxNzAxMDA2NDYyLCJleHAiOjE3MDEwOTI4NjJ9.TfQY0xOzHmOTJfLfANFxj7LCJeS-uF_kp9TXmUSPXbw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5555/user/tickets/t5C5nt745av99JL9j14x",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"user",
+								"tickets",
+								"t5C5nt745av99JL9j14x"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getComingShowTime",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5555/showtime/coming",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"showtime",
+								"coming"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllUser",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImFjY291bnRJZCI6IjUzRkE4M0FpNFFoazg2OW93MDJvIiwidXNlcm5hbWUiOiJsb25ndnUifSwiaWF0IjoxNjk4NzY3MzQwLCJleHAiOjE2OTg4NTM3NDB9.g_WYSw3ExYh__IxzuD-_vj7UGnA4uQHFms7KydfEnSk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5555/user/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"user",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllShowTime",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImFjY291bnRJZCI6IjUzRkE4M0FpNFFoazg2OW93MDJvIiwidXNlcm5hbWUiOiJsb25ndnUifSwiaWF0IjoxNjk4NzU1Nzc1LCJleHAiOjE2OTg4NDIxNzV9.gxvbLdp2sKv2zRN9aauJQLXpsWbddXx9ZGdJMgkyois",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5555/showtime/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"showtime",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllMovie",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImFjY291bnRJZCI6IjUzRkE4M0FpNFFoazg2OW93MDJvIiwidXNlcm5hbWUiOiJsb25ndnUifSwiaWF0IjoxNjk4NzU1Nzc1LCJleHAiOjE2OTg4NDIxNzV9.gxvbLdp2sKv2zRN9aauJQLXpsWbddXx9ZGdJMgkyois",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5555/movie/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"movie",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllTicket",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImFjY291bnRJZCI6IjUzRkE4M0FpNFFoazg2OW93MDJvIiwidXNlcm5hbWUiOiJsb25ndnUifSwiaWF0IjoxNjk4NzU1Nzc1LCJleHAiOjE2OTg4NDIxNzV9.gxvbLdp2sKv2zRN9aauJQLXpsWbddXx9ZGdJMgkyois",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5555/ticket/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"ticket",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getNowShowTime",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5555/showtime/now",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"showtime",
+								"now"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTimes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5555/showtime/32e869oTz815Z0k2gEsH",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"showtime",
+								"32e869oTz815Z0k2gEsH"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSeatsOfShowTime",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImFjY291bnRJZCI6IjUzRkE4M0FpNFFoazg2OW93MDJvIiwidXNlcm5hbWUiOiJsb25ndnUiLCJwYXNzd29yZCI6IiQyYiQxMCQxb2pzMzJIVFpIN3duZUt0YnV5ZlplS3lueXpuME9STDlzeWUvVVJLUmppZ01DbUlCQk9pTyIsIm5pY2tuYW1lIjoiSG_DoG5nIExvbmcgVsWpIiwiZW1haWwiOiJobHY5MTJAZ21haWwuY29tIiwiYmFsYW5jZSI6Mzk1ODAwMDB9LCJpYXQiOjE2OTc3MzAzNDMsImV4cCI6MTY5NzczMDM0NH0.ORI9hiccwqTsnafu-lfmx3Zi5R9U0007RJ5Aq1ktYwg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5555/showtime/seats/3O0393ScTtP84oxi531R",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"showtime",
+								"seats",
+								"3O0393ScTtP84oxi531R"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUser",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImFjY291bnRJZCI6IjUzRkE4M0FpNFFoazg2OW93MDJvIiwidXNlcm5hbWUiOiJsb25ndnUifSwiaWF0IjoxNjk4NTgzMDIyLCJleHAiOjE2OTg2Njk0MjJ9.A4wpXbh7phSe71oHhaNpAAZdnEjTH6xYPG0WEZniqX4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5555/user/53FA83Ai4Qhk869ow02o",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"user",
+								"53FA83Ai4Qhk869ow02o"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PATCH",
+			"item": [
+				{
+					"name": "rechargeBalance",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImFjY291bnRJZCI6IjUzRkE4M0FpNFFoazg2OW93MDJvIiwidXNlcm5hbWUiOiJsb25ndnUifSwiaWF0IjoxNjk3Nzc5ODcwLCJleHAiOjE2OTc3Nzk4OTB9.d47ZNyc0OMcy10NkeQEDSeeAuKrw5E-zx-rHRMbqQmo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"recharge\": 5000000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5555/user/53FA83Ai4Qhk869ow02o/balance",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"user",
+								"53FA83Ai4Qhk869ow02o",
+								"balance"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "deleteTicket",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImFjY291bnRJZCI6IjUzRkE4M0FpNFFoazg2OW93MDJvIiwidXNlcm5hbWUiOiJsb25ndnUifSwiaWF0IjoxNjk4OTExNzM3LCJleHAiOjE2OTg5OTgxMzd9.3OkCi8Gqi6VOKXjV8iDjhlBxFRZzeOJTDk_WwYX2LtE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accountId\": \"t5C5nt745av99JL9j14x\",\r\n    \"ticketId\": \"x04AWx626F89b2h7T7ib\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5555/ticket/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5555",
+							"path": [
+								"ticket",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
